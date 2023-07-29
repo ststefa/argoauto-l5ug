@@ -4,14 +4,12 @@ namespace: argocd
 
 resources:
 - github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
-
-patchesStrategicMerge:
 #! pin to arch
 - armch-amd64.yaml
 
 #! add some patches
 patches:
-  - path: patches/argocd-cm.yaml
+- path: patches/argocd-cm.yaml
 
 configMapGenerator:
 - name: argocd-cm
