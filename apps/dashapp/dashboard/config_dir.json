@@ -1,0 +1,13 @@
+{
+  "appName": "dashapp",
+  "userGivenName": "dashapp",
+  "destNamespace": "default",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": "aio/deploy/recommended.yaml",
+  "srcRepoURL": "https://github.com/kubernetes/dashboard.git",
+  "srcTargetRevision": "v2.7.0",
+  "labels": null,
+  "annotations": null,
+  "exclude": "",
+  "include": ""
+}
