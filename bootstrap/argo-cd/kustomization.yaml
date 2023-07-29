@@ -5,10 +5,11 @@ namespace: argocd
 resources:
 - github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
 
-#! add some patches
 patches:
-#! pin to arch
-- path: armch-amd64.yaml
+#! Pin workloads and amd64. Argo only has images for amd64 and arm64
+- path: patches/armch-amd64.yaml
+  target:
+    labelSelector: app.kubernetes.io/part-of=argocd
 - path: patches/argocd-cm.yaml
 
 configMapGenerator:
