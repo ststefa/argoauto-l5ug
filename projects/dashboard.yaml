@@ -92,4 +92,7 @@ spec:
           allowEmpty: true
           prune: true
           selfHeal: true
+        #! auto-create ns
+        syncOptions:
+        - CreateNamespace=true
 status: {}
