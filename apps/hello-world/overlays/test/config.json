@@ -1,7 +1,7 @@
 {
   "appName": "hello-world",
   "userGivenName": "hello-world",
-  "destNamespace": "foo",
+  "destNamespace": "test",
   "destServer": "https://kubernetes.default.svc",
   "srcPath": "apps/hello-world/overlays/test",
   "srcRepoURL": "https://github.com/ststefa/argoauto-l5ug.git",
