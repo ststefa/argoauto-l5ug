@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: argocd-server
   labels:
     app.kubernetes.io/instance: argo-cd
 spec:
