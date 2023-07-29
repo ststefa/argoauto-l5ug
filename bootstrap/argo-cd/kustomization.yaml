@@ -10,6 +10,11 @@ patches:
 - path: patches/armch-amd64.yaml
   target:
     labelSelector: app.kubernetes.io/part-of=argocd
+    kind: Deployment
+- path: patches/armch-amd64.yaml
+  target:
+    labelSelector: app.kubernetes.io/part-of=argocd
+    kind: StatefulSet
 - path: patches/argocd-cm.yaml
 
 configMapGenerator:
