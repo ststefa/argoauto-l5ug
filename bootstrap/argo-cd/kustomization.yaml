@@ -5,6 +5,7 @@ namespace: argocd
 resources:
 - github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
 
+#! add some patches
 patches:
   - path: patches/argocd-cm.yaml
 
