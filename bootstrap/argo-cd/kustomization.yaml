@@ -7,11 +7,11 @@ resources:
 
 patches:
 #! Pin workloads and amd64. Argo only has images for amd64 and arm64
-- path: patches/armch-amd64.yaml
+- path: patches/arch-amd64.yaml
   target:
     labelSelector: app.kubernetes.io/part-of=argocd
     kind: Deployment
-- path: patches/armch-amd64.yaml
+- path: patches/arch-amd64.yaml
   target:
     labelSelector: app.kubernetes.io/part-of=argocd
     kind: StatefulSet
