@@ -8,7 +8,7 @@ resources:
 #! add some patches
 patches:
 #! pin to arch
-- armch-amd64.yaml
+- path: armch-amd64.yaml
 - path: patches/argocd-cm.yaml
 
 configMapGenerator:
