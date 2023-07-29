@@ -1,7 +1,7 @@
-# schedule to amd64, avoid arm
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: DoesNotMatterButSyntacticallyRequired
   labels:
     app.kubernetes.io/instance: argo-cd
 spec:
