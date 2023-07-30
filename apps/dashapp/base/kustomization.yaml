@@ -6,7 +6,9 @@ resources:
 #- https://github.com/kubernetes/dashboard/aio/deploy?ref=v2.7.0
 #- https://github.com/kubernetes/dashboard/blob/v2.7.0/aio/deploy/recommended.yaml
 - recommended.yaml
-- crb.yaml
+# removed again, does not have any effect
+#- crb.yaml
+- user.yaml
 
 #helmCharts:
 #  - name: dashboard
