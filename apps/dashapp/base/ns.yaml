@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  # must match with helm-rendered namespace which is <release_name>-<chart-name>
-  name: my-kubernetes-dashboard
+  # must match with helm-rendered namespace
+  name: kubernetes-dashboard
 spec: {}
 status: {}

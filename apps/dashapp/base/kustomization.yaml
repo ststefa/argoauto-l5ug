@@ -19,3 +19,5 @@ helmCharts:
     #repo: .
     #repo: kubernetes-dashboard-7.0.3.tgz
     valuesFile: dashboard-values.yaml
+    # Ns must be specified explicitly
+    namespace: kubernetes-dashboard
