@@ -2,12 +2,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- ns.yaml
 - user.yaml
 
 helmCharts:
   - name: kubernetes-dashboard
     includeCRDs: false
-    releaseName: dashboard
+    releaseName: my
     version: 7.0.3
     #repo: https://github.com/kubernetes/dashboard/charts/kubernetes-dashboard.yaml
     #repo: https://github.com/kubernetes/dashboard/charts/helm-chart/kubernetes-dashboard
