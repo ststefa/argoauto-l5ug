@@ -1,7 +1,7 @@
 {
   "appName": "dashapp",
   "userGivenName": "dashapp",
-  "destNamespace": "",
+  "destNamespace": "dashboard",
   "destServer": "https://kubernetes.default.svc",
   "srcPath": "apps/dashapp/overlays/dashboard",
   "srcRepoURL": "https://github.com/ststefa/argoauto-l5ug.git",
