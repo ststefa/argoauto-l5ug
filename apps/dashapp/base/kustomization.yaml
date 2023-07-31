@@ -13,4 +13,5 @@ resources:
 # Create a ServiceAccount used for logging in
 - user.yaml
 
-namespace: dashboard
+# Changing ns does not fully work. Problems with ClusterRole(Binding)s
+#namespace: dashboard
