@@ -92,7 +92,7 @@ spec:
           allowEmpty: true
           prune: true
           selfHeal: true
-        #! auto-create ns
-        syncOptions:
-        - CreateNamespace=true
+        #! auto-create ns. Not possible because helmchart composes ns
+        #syncOptions:
+        #- CreateNamespace=true
 status: {}
