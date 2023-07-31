@@ -1,4 +1,4 @@
-#! copied from https://github.com/kubernetes/dashboard/blob/v3.0.0-alpha0/charts/helm-chart/kubernetes-dashboard/values.yaml
+#! copied from https://github.com/kubernetes/dashboard/blob/44f0474cc03bf7dca3578668a439c33059137b1c/charts/helm-chart/kubernetes-dashboard/values.yaml
 # Copyright 2017 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,6 +31,7 @@ app:
     # To disable set the following configuration to null:
     # securityContext: null
     securityContext:
+      runAsNonRoot: true
       seccompProfile:
         type: RuntimeDefault
     # ContainerSecurityContext to be added to containers
@@ -41,6 +42,8 @@ app:
       readOnlyRootFilesystem: true
       runAsUser: 1001
       runAsGroup: 2001
+      capabilities:
+        drop: ["ALL"]
     # Pod Disruption Budget configuration
     # Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
     podDisruptionBudget:
@@ -77,6 +80,7 @@ app:
     #  #  Is this CRD namespaced?
     #  namespaced: true
   ingress:
+    enabled: true
     hosts:
     # Keep 'localhost' host only if you want to access Dashboard using 'kubectl port-forward ...' on:
     # https://localhost:8443
@@ -85,7 +89,12 @@ app:
     ingressClassName: nginx
     pathType: ImplementationSpecific
     secretName: kubernetes-dashboard-certs
-    issuer: selfsigned
+    issuer:
+      name: selfsigned
+      # Scope determines what kind of issuer annotation will be used on ingress resource
+      # - default - adds 'cert-manager.io/issuer'
+      # - cluster - adds 'cert-manager.io/cluster-issuer'
+      scope: default
     labels: {}
     annotations: {}
     paths:
