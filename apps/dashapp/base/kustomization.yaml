@@ -1,20 +1,20 @@
 # see https://json.schemastore.org/kustomization.json
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-#resources:
-#- user.yaml
+resources:
+- user.yaml
 
 helmCharts:
   - name: kubernetes-dashboard
     includeCRDs: false
     releaseName: dashboard
-    version: "7.0.3"
+    version: 7.0.3
     #repo: https://github.com/kubernetes/dashboard/charts/kubernetes-dashboard.yaml
     #repo: https://github.com/kubernetes/dashboard/charts/helm-chart/kubernetes-dashboard
     #repo: https://github.com/kubernetes/dashboard/tree/master/charts/helm-chart/kubernetes-dashboard/
     # must specify a valid helm repo. Get repo contents by inspecting <repo-url>/index.yaml
     repo: https://kubernetes.github.io/dashboard/
-    # attempt to use local chart
+    # Attempt to use local chart. Failed.
     #repo: .
     #repo: kubernetes-dashboard-7.0.3.tgz
     valuesFile: dashboard-values.yaml
