@@ -12,3 +12,5 @@ resources:
 #- crb.yaml
 # Create a ServiceAccount used for logging in
 - user.yaml
+
+namespace: "{{destNamespace}}"
