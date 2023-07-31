@@ -5,10 +5,16 @@ kind: Kustomization
 #- user.yaml
 
 helmCharts:
-  - name: dashboard
+  - name: kubernetes-dashboard
     includeCRDs: false
     releaseName: dashboard
-    version: 12.5.6
-    repo: https://github.com/kubernetes/dashboard/charts/kubernetes-dashboard.yaml
+    version: "7.0.3"
+    #repo: https://github.com/kubernetes/dashboard/charts/kubernetes-dashboard.yaml
     #repo: https://github.com/kubernetes/dashboard/charts/helm-chart/kubernetes-dashboard
+    #repo: https://github.com/kubernetes/dashboard/tree/master/charts/helm-chart/kubernetes-dashboard/
+    # must specify a valid helm repo. Get repo contents by inspecting <repo-url>/index.yaml
+    repo: https://kubernetes.github.io/dashboard/
+    # attempt to use local chart
+    #repo: .
+    #repo: kubernetes-dashboard-7.0.3.tgz
     valuesFile: dashboard-values.yaml
