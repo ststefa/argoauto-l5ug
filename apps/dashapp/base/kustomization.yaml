@@ -2,22 +2,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ns.yaml
+# Using URL-style ref fails, tried
+#- https://github.com/kubernetes/dashboard/aio/deploy/recommended.yaml?ref=v2.7.0
+#- https://github.com/kubernetes/dashboard/aio/deploy?ref=v2.7.0
+#- https://github.com/kubernetes/dashboard/blob/v2.7.0/aio/deploy/recommended.yaml
+# Downloading file and using locally works. TODO: not understood
+- recommended.yaml
+# removed again, does not have desired effect
+#- crb.yaml
+# Create a ServiceAccount used for logging in
 - user.yaml
-
-helmCharts:
-  - name: kubernetes-dashboard
-    includeCRDs: true
-    releaseName: my
-    version: 7.0.3
-    #repo: https://github.com/kubernetes/dashboard/charts/kubernetes-dashboard.yaml
-    #repo: https://github.com/kubernetes/dashboard/charts/helm-chart/kubernetes-dashboard
-    #repo: https://github.com/kubernetes/dashboard/tree/master/charts/helm-chart/kubernetes-dashboard/
-    # must specify a valid helm repo. Get repo contents by inspecting <repo-url>/index.yaml
-    repo: https://kubernetes.github.io/dashboard/
-    # Attempt to use local chart. Failed.
-    #repo: .
-    #repo: kubernetes-dashboard-7.0.3.tgz
-    valuesFile: dashboard-values.yaml
-    # Ns must be specified explicitly
-    namespace: kubernetes-dashboard
