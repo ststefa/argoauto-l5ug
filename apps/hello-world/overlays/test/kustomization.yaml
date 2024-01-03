@@ -7,5 +7,4 @@ patches:
 - path: arch-amd64.yaml
   target:
     labelSelector: app.kubernetes.io/part-of=argocd
-    app: trivial-go-web-app
     kind: Deployment
