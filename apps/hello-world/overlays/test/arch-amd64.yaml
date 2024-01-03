@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: DoesNotMatterButSyntacticallyRequired
+  labels:
+    app.kubernetes.io/instance: argo-cd
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
