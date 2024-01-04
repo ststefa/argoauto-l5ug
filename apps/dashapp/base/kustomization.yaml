@@ -3,9 +3,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 # Using URL-style ref fails, tried
+# URL format originates from go lib, see https://github.com/hashicorp/go-getter#url-format
 #- https://github.com/kubernetes/dashboard/aio/deploy/recommended.yaml?ref=v2.7.0
 #- https://github.com/kubernetes/dashboard/aio/deploy?ref=v2.7.0
 #- https://github.com/kubernetes/dashboard/blob/v2.7.0/aio/deploy/recommended.yaml
+#- github.com/kubernetes/dashboard/aio/deploy/recommended.yaml?ref=v2.7.0
 # Downloading file and using locally works. TODO: not understood
 - recommended.yaml
 # removed again, does not have desired effect
