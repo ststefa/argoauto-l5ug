@@ -1,0 +1,11 @@
+#! See https://hub.docker.com/r/kostiscodefresh/simple-web-app/tags
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: webserver-simple
+        image: docker.io/kostiscodefresh/simple-web-app:c88df35
