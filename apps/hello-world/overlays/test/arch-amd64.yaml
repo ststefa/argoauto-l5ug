@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: DoesNotMatterButSyntacticallyRequired
+  name: simple-deployment
+  #! Not really required, target already unique
   labels:
     app.kubernetes.io/instance: argo-cd
 spec:

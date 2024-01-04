@@ -5,11 +5,14 @@ resources:
 
 patches:
 - path: arch-amd64.yaml
-  target:
-    kind: Deployment
-    #! Would equivalently target all deployments if not specifying "name:"
-    name: simple-deployment
+#! Defining "target:" is redundant to specifying target def in patchfile. Both can be used but patchfile must contain certain fields (like "name:")
+#  target:
+#    kind: Deployment
+#    #! Would equivalently target all deployments if not specifying "name:"
+#    name: simple-deployment
+- path: image.yaml
 
-# Play with generators, see https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/buildmetadata/#managed-by-label
-# originAnnotations is interesting because it records the source of resources specified as URL (including version)
-buildMetadata: [managedByLabel, originAnnotations, transformerAnnotations]
+#! Play with generators, see https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/buildmetadata/#managed-by-label
+#! originAnnotations is interesting because it records the source of resources specified as URL (including version)
+#buildMetadata: [managedByLabel, originAnnotations, transformerAnnotations]
+buildMetadata: [originAnnotations]
