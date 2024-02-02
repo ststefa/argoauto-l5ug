@@ -16,6 +16,7 @@ patches:
     labelSelector: app.kubernetes.io/part-of=argocd
     kind: StatefulSet
 - path: patches/argocd-cm.yaml
+- path: patches/argocd-cmd-params-cm-patch.yaml
 
 configMapGenerator:
 - name: argocd-cm
