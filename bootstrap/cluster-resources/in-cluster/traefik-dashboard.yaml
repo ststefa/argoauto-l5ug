@@ -5,9 +5,11 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
-    api:
-      dashboard: true
-      insecure: false
+    ingressRoute:
+      dashboard:
+        enabled: true
+        matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+        entryPoints: ["websecure"]
     logs:
       general:
         level: INFO
