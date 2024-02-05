@@ -4,6 +4,7 @@ namespace: argocd
 
 resources:
 - github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
+- traefik-dashboard.yaml
 
 patches:
 #! Pin workloads and amd64. Argo only has images for amd64 and arm64
@@ -18,8 +19,6 @@ patches:
 # Argo config tweaks
 - path: patches/argocd-cm.yaml
 - path: patches/argocd-cmd-params-cm-patch.yaml
-# Ingress for traefik dashboard
-- path: patches/traefik-dashboard-ingressroute.yaml
 
 configMapGenerator:
 - name: argocd-cm
