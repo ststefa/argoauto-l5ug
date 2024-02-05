@@ -4,4 +4,5 @@ resources:
 - ns.yaml
 #! git URLs can optionally be postfixed with a ref
 - github.com/argoproj-labs/argocd-autopilot/examples/demo-app?ref=v0.4.17
+#! Add a traefik ingressroute
 - ingressroute.yaml
