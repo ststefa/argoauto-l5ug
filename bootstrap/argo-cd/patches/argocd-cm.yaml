@@ -9,5 +9,7 @@ data:
   kustomize.buildOptions: "--enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone"
   # Allow anon access
   users.anonymous.enabled: "true"
-  # Set root URL to make Traefik ingress work
+  # Set root URL to make Traefik ingress work?
   url: https://raspi-l5ug/argo
+  # Enable the exec function?
+  exec.enabled: "false"
