@@ -15,8 +15,11 @@ patches:
   target:
     labelSelector: app.kubernetes.io/part-of=argocd
     kind: StatefulSet
+# Argo config tweaks
 - path: patches/argocd-cm.yaml
 - path: patches/argocd-cmd-params-cm-patch.yaml
+# Ingress for traefik dashboard
+- path: patches/traefik-dashboard-ingressroute.yaml
 
 configMapGenerator:
 - name: argocd-cm
