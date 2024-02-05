@@ -5,11 +5,13 @@ metadata:
   name: traefik
   namespace: kube-system
 spec:
+  # Expose API via Host, not path, because path-matching might be ambiguous
+  # Port 80 conflicts with host-level http (homebridge). I only use 443 for k3s
   valuesContent: |-
     ingressRoute:
       dashboard:
         enabled: true
-        matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+        matchRule: Host(`traefik.l5ug.nom.cx`)
         entryPoints: ["websecure"]
     logs:
       general:
