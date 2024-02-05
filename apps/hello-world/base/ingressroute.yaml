@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-service
+  namespace: foo
+spec:
+  ports:
+    - name: whoami
+      protocol: TCP
+      port: 1234
+      targetPort: 8080
+  selector:
+    app: trivial-go-web-app
+  type: ClusterIP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: simple-route
+  namespace: foo
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`simple.l5ug.nom.cx`)
+      priority: 10
+      services:
+        - name: simple-service
+          namespace: foo
+          port: 1234
