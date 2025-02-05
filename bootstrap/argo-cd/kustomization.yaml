@@ -3,11 +3,10 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-#! Original references argo-cd stable
+#! Original references argo-cd indirectly
 #- github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
 #! Reference argo-cd project directly
-- github.com/argoproj/argo-cd/manifests/install.yaml?ref=stable
-# Could use equivalently: https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 patches:
 #! Pin workloads and amd64. Argo only has images for amd64 and arm64
