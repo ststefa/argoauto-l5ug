@@ -5,7 +5,7 @@ namespace: argocd
 resources:
 #! Original references argo-cd indirectly
 #- github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
-#! Reference argo-cd project directly
+#! Reference argo-cd project directly. The "stable" tag always contains the latest version. This makes argo-cd auto-update itself
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 patches:
