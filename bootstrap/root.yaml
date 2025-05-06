@@ -21,7 +21,7 @@ spec:
   project: default
   source:
     path: projects
-    repoURL: https://github.com/ststefa/argoauto-l5ug.git
+    repoURL: git@github.com:ststefa/argoauto-l5ug.git
   syncPolicy:
     automated:
       allowEmpty: true
