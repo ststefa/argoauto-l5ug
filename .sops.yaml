@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: .*\.sops\.yaml
+    encrypted_regex: "^(data|stringData|sshPrivateKey)$"
+    hc_vault_transit_uri: "https://vault.heldenzeit.net/v1/transit/keys/sops"
