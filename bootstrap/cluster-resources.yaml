@@ -3,7 +3,6 @@ kind: ApplicationSet
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  creationTimestamp: null
   name: cluster-resources
   namespace: argocd
 spec:
@@ -46,4 +45,3 @@ spec:
         automated:
           allowEmpty: true
           selfHeal: true
-status: {}
