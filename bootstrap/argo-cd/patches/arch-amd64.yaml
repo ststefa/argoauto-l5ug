@@ -1,3 +1,4 @@
+##! This is no longer required. I accidentally used a 32bit k3s, leading to the node being "arm", not "arm64" for which an image exists
 apiVersion: apps/v1
 kind: Deployment
 metadata:

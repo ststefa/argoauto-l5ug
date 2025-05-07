@@ -9,15 +9,16 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 patches:
-#! Pin workloads and amd64. Argo only has images for amd64 and arm64
-- path: patches/arch-amd64.yaml
-  target:
-    labelSelector: app.kubernetes.io/part-of=argocd
-    kind: Deployment
-- path: patches/arch-amd64.yaml
-  target:
-    labelSelector: app.kubernetes.io/part-of=argocd
-    kind: StatefulSet
+##! Pin workloads and amd64. Argo only has images for amd64 and arm64
+##! This is no longer required. I accidentally used a 32bit k3s, leading to the node being "arm", not "arm64" for which an image exists
+#- path: patches/arch-amd64.yaml
+#  target:
+#    labelSelector: app.kubernetes.io/part-of=argocd
+#    kind: Deployment
+#- path: patches/arch-amd64.yaml
+#  target:
+#    labelSelector: app.kubernetes.io/part-of=argocd
+#    kind: StatefulSet
 # Argo config tweaks
 - path: patches/argocd-cm.yaml
 - path: patches/argocd-cmd-params-cm-patch.yaml
