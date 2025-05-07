@@ -37,7 +37,7 @@
 #  - git:
 #      files:
 #      - path: apps/**/dashboard/config.json
-#      repoURL: https://github.com/ststefa/argoauto-l5ug.git
+#      repoURL: git@github.com:ststefa/argoauto-l5ug.git
 #      requeueAfterSeconds: 20
 #      revision: ""
 #      template:
@@ -50,7 +50,7 @@
 #  - git:
 #      files:
 #      - path: apps/**/dashboard/config_dir.json
-#      repoURL: https://github.com/ststefa/argoauto-l5ug.git
+#      repoURL: git@github.com:ststefa/argoauto-l5ug.git
 #      requeueAfterSeconds: 20
 #      revision: ""
 #      template:

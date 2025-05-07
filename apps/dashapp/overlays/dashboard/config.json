@@ -4,7 +4,7 @@
   "destNamespace": "kubernetes-dashboard",
   "destServer": "https://kubernetes.default.svc",
   "srcPath": "apps/dashapp/overlays/dashboard",
-  "srcRepoURL": "https://github.com/ststefa/argoauto-l5ug.git",
+  "srcRepoURL": "git@github.com:ststefa/argoauto-l5ug.git",
   "srcTargetRevision": "",
   "labels": null,
   "annotations": null,
