@@ -1,7 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  creationTimestamp: null
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
@@ -29,12 +28,3 @@ spec:
       selfHeal: true
     syncOptions:
     - allowEmpty=true
-status:
-  health: {}
-  summary: {}
-  sync:
-    comparedTo:
-      destination: {}
-      source:
-        repoURL: ""
-    status: ""
