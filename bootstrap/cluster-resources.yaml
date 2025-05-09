@@ -21,7 +21,7 @@ spec:
           source:
             repoURL: ""
   syncPolicy:
-    preserveResourcesOnDeletion: true
+    preserveResourcesOnDeletion: false
   template:
     metadata:
       labels:
