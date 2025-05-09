@@ -24,6 +24,8 @@ patches:
 - path: patches/argocd-cmd-params-cm-patch.yaml
 # Enable ksops
 - path: patches/argocd-dep-ksops.yaml
+# Mount SA creds
+- path: patches/argocd-dep-sa.yaml
 
 configMapGenerator:
 - name: argocd-cm
