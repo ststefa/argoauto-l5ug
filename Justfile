@@ -15,7 +15,7 @@ sops-check:
               RC=1
           fi
       done < <(find . -type f -mindepth 2 | grep -E "$REGEX")
-  done < <(grep 'path_regex:' ".sops.yaml" | sed -E 's/.*path_regex:\s*["'\'']?(.*?)["'\'']?$/\1/')
+  done < <(grep -- '- path_regex:' .sops.yaml | grep -v ' *#' | sed -E 's/.*path_regex:\s*["'\'']?(.*?)["'\'']?$/\1/')
   exit $RC
 
 # Sops-encrypt defined files
@@ -31,4 +31,4 @@ sops-encrypt:
             sops -e -i "$FILE"
         fi
       done < <(find . -type f -mindepth 2 | grep -E "$REGEX")
-  done < <(grep 'path_regex:' ".sops.yaml" | sed -E 's/.*path_regex:\s*["'\'']?(.*?)["'\'']?$/\1/')
+  done < <(grep -- '- path_regex:' .sops.yaml | grep -v ' *#' | sed -E 's/.*path_regex:\s*["'\'']?(.*?)["'\'']?$/\1/')
