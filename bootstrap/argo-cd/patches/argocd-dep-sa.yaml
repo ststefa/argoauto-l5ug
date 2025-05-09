@@ -1,0 +1,9 @@
+#! Enable mounting of the SA token. This is required so kustomize can authenticate towards vault using the kubernetes auth method
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+spec:
+  template:
+    spec:
+      automountServiceAccountToken: true
