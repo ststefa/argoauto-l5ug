@@ -8,6 +8,21 @@ resources:
 #! Reference argo-cd project directly. The "stable" tag always contains the latest version. This makes argo-cd auto-update itself
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+#! Use ksops to decrypt secrets on the fly
+generators:
+  - |
+    apiVersion: viaduct.ai/v1
+    kind: ksops
+    metadata:
+      name: example-secret-generator
+      annotations:
+        config.kubernetes.io/function: |
+            exec:
+              # ksops must be reachable by $PATH
+              path: ksops
+    files:
+    - ./patches/argocd-repo-creds.sops.yaml
+
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
 ##! This is no longer required. I accidentally used a 32bit k3s, leading to the node being "arm", not "arm64". And there's no image for "arm".
