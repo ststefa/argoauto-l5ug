@@ -7,9 +7,7 @@ data:
   # Info (for later):private Helm repositories might require more configuration
   # https://github.com/argoproj/argo-cd/issues/10745
   kustomize.buildOptions: "--enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone"
-  # Allow anon access?
-  users.anonymous.enabled: "false"
-  # Set root URL to make Traefik ingress work?
-  #url: https://raspi-l5ug/argo
-  # Enable the exec function?
+  #! TODO: Set root URL to make Traefik ingress work?
+  #url: https://raspi-l5ug.heldenzeit.net
+  #! TODO: Is this required?
   exec.enabled: "true"
