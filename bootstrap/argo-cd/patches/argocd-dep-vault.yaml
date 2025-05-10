@@ -1,0 +1,17 @@
+#! Set some env-vars to enable vault access
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+spec:
+  template:
+    spec:
+      containers:
+        - name: argocd-repo-server
+          env:
+            - name: VAULT_ADDR
+              value: "https://vault.heldenzeit.net"
+            - name: VAULT_AUTH_METHOD
+              value: "kubernetes"
+            - name: VAULT_ROLE
+              value: "ksops-role"
