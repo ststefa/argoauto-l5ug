@@ -1,0 +1,24 @@
+#! See https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#repository-credentials
+#! The corresponding pubkey must be added as a "Deploy key" to the repo that is accessed
+apiVersion: v1
+kind: Secret
+metadata:
+    name: ststefa-creds
+    namespace: argocd
+    labels:
+        argocd.argoproj.io/secret-type: repo-creds
+stringData:
+    type: git
+    url: git@github.com:ststefa
+    sshPrivateKey: ENC[AES256_GCM,data:kZC/zDNJ8RulHagdEq0gjI+eo/yv3pVqsaMpCZ8WJvwnNMY/hwukvqG+Kurvm7Ox0nFvRuDZ0DNegEGe9arlUdR6/mxUX4wpBrTQB0eXyBns/o99g7x/7Qutlz3oIG24aUUuxCTY0kUNBib9+gEbgq8BnjzmyR76f73HgJJyAA+LArnlg/lf0gwAJ1lnOuhjhF0upyANO3TAFCR7bteoDgDV4gvWRmxk7BEZXEOVmZAkGExC8lm/WTmo6f+KKryJCPzW78whflj1MyXONRc1apw1mmN0cLNPAZpuk0OfF8cy/1OFfZCtcvKyqDgyArbCak3+dbgNQYNGgE5Mi7kPxIzqc7yBzafhXbhdDn96mHe46LICozMrBuNMCGkr2YVvppS9NJIEsqNVl6AasHH90Fanh6f7sDN1hoeJnXKR9ryhpalcSnj8KZz6I2d3qGBxikGZeREvduCnsCXxBYxNzfPgyyZvq9gEkFt8VduLRGwqBMqqEklENAcVc7hvpMbv3arWpb+XN0CXdozdqMAyz/f7GgorvOUfop+o,iv:0fROBqzBrpBNsTq/VVSlBHTlEce9EzWda6rJfKphXtw=,tag:VT8vYBq2iUjubCaogXEPwg==,type:str]
+sops:
+    hc_vault:
+        - vault_address: https://vault.heldenzeit.net
+          engine_path: transit
+          key_name: sops
+          created_at: "2025-05-10T15:45:18Z"
+          enc: vault:v1:00URIHYkLv6AMbBNNQkfl5ylP41WSNk+L2lkD9e4Oe9mx/oqs5To76HY0+5UHK/Rl1NtCIuEY7dr1mrs
+    lastmodified: "2025-05-10T15:45:18Z"
+    mac: ENC[AES256_GCM,data:JydNdZtqYHfiSskahtaKXAFuZqzOwm1t1iz8+iUxBJffreeesrt9i/mahcQlFDBS2Con37xDxuxFuvp72QfYDBXU9vtilWR6cw9CvkYQr9TsS0lLuv3CnSZv56jgufD80t3Q77jmdFPrsws8WBIcpdArCkdzYpSnSenUXkWsrTU=,iv:et/l9CeZbhCc16B4nvsijKjBbVIYu0fmC+s5KswMIB8=,tag:aYvjtsyw88HLmNvkQ7unKQ==,type:str]
+    encrypted_regex: sshPrivateKey
+    version: 3.10.1
