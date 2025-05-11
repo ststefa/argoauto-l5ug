@@ -6,14 +6,18 @@ metadata:
 spec:
   template:
     spec:
+      #! create a vault dir that is mounted by vault and argocd
+      volumes:
+        - name: vault
+          emptyDir: {}
       containers:
         #! add a vault container for debugging
         - name: vault-cli
           image: hashicorp/vault:1.19.3
           command: ["sleep", "infinity"]
           volumeMounts:
-            - name: shared
-              mountPath: /shared
+            - name: vault
+              mountPath: /vault
         - name: argocd-repo-server
           env:
             - name: VAULT_ADDR
@@ -24,5 +28,5 @@ spec:
               value: "ksops-role"
         #! attach the vault container for debugging
           volumeMounts:
-            - name: shared
-              mountPath: /shared
+            - name: vault
+              mountPath: /vault
