@@ -10,6 +10,9 @@ spec:
         - name: vault-cli
           image: hashicorp/vault:1.19.3
           command: ["sleep", "infinity"]
+          env:
+            - name: VAULT_ADDR
+              value: "https://vault.heldenzeit.net"
         #! Set some env-vars to enable vault access
         - name: argocd-repo-server
           env:
