@@ -50,7 +50,7 @@ patches:
 #! Groups and policies
 #- path: patches/argocd-rbac-cm.yaml
 #! Credentials to access private repo over ssh
-#- path: patches/argocd-repo-creds.sops.yaml
+- path: patches/argocd-repo-creds.sops.yaml
 #! SSO client secret
 #- path: patches/argocd-sso.sops
 

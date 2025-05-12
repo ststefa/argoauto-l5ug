@@ -4,7 +4,6 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: ststefa-creds
-    namespace: argocd
     labels:
         argocd.argoproj.io/secret-type: repo-creds
 stringData:
@@ -18,7 +17,7 @@ sops:
           key_name: sops
           created_at: "2025-05-10T15:45:18Z"
           enc: vault:v1:00URIHYkLv6AMbBNNQkfl5ylP41WSNk+L2lkD9e4Oe9mx/oqs5To76HY0+5UHK/Rl1NtCIuEY7dr1mrs
-    lastmodified: "2025-05-10T15:45:18Z"
-    mac: ENC[AES256_GCM,data:JydNdZtqYHfiSskahtaKXAFuZqzOwm1t1iz8+iUxBJffreeesrt9i/mahcQlFDBS2Con37xDxuxFuvp72QfYDBXU9vtilWR6cw9CvkYQr9TsS0lLuv3CnSZv56jgufD80t3Q77jmdFPrsws8WBIcpdArCkdzYpSnSenUXkWsrTU=,iv:et/l9CeZbhCc16B4nvsijKjBbVIYu0fmC+s5KswMIB8=,tag:aYvjtsyw88HLmNvkQ7unKQ==,type:str]
+    lastmodified: "2025-05-12T08:07:47Z"
+    mac: ENC[AES256_GCM,data:gBs0OCQHvgzTf6p3cf9r/l4a522pvR9NCEwoNxr+hv8iF5pEhcFYdUWEX0YMyKmH3WRf0Cvb0afTRNsUFlhr1vXAAC9R9hmiYNXCK+rgMAume+ayjG0rSiwl+nTGGuRtVUJpjg0uKRhILEvZI2gkrd2cPX9oeLjJPi04M1VEfUY=,iv:i3rtURywOcxfc9SgCgsv5t/87bzbsEYH/xGeV9d+kw8=,tag:trRkm1Azl09TfPFWBPX7tA==,type:str]
     encrypted_regex: sshPrivateKey
     version: 3.10.1
