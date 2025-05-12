@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
-  #! Repo polling interval
-  timeout.reconciliation: "15s"
+  #! Repo polling interval. Rather a safety net as refreshs are performed manually anyway while developing. Do not set too low in order to save CPU cycles. Default ist 180.
+  timeout.reconciliation: "300s"
   # Info (for later):private Helm repositories might require more configuration
   # https://github.com/argoproj/argo-cd/issues/10745
   kustomize.buildOptions: "--enable-alpha-plugins  --enable-exec --enable-helm --load-restrictor LoadRestrictionsNone"
