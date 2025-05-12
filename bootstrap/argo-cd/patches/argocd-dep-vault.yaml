@@ -5,6 +5,29 @@ metadata:
 spec:
   template:
     spec:
+      initContainers:
+        #! Generate initial vault token. This has to happen in an initContainer because the file has to be present at the time it is mounted by the argocd-repo-server container. If the file is not present at that moment, then /custom-tools/.vault-token irreversibly becomes a directory, breaking the whole process!
+        - name: vault-auth
+          image: hashicorp/vault:1.15
+          command:
+            - sh
+            - -c
+            - |
+              set -x
+              set -eu
+              date --iso-8601=seconds
+              echo "Generating inital vault token"
+              TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login \
+                role=ksops-role \
+                jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
+              echo "$TOKEN" > /custom-tools/.vault-token
+              echo Done
+          env:
+            - name: VAULT_ADDR
+              value: "https://vault.heldenzeit.net"
+          volumeMounts:
+            - name: custom-tools
+              mountPath: /custom-tools
       containers:
         #! Add a vault container for debugging. TODO: remove
         - name: vault-cli
@@ -16,7 +39,9 @@ spec:
           volumeMounts:
             - name: custom-tools
               mountPath: /custom-tools
-        - name: vault-token-generator
+        #! Refresh token in intervals. It is crucial that the container does not fail because it will break the pod, which in turn breaks the whole argocd loop
+        #! Make sure that the token lifetime is longer than the loop interval
+        - name: vault-token-refresher
           image: hashicorp/vault:1.19.3
           env:
             - name: VAULT_ADDR
@@ -29,16 +54,13 @@ spec:
             - -c
             - |
               set -x
-              #set -eu
               while true ; do
-                date
+                date --iso-8601=seconds
                 ls -la /
                 ls -la /custom-tools
                 echo "Regenerating vault token"
-                rm -vfr /custom-tools/.vault-token
-                TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
-                echo "$TOKEN" > /custom-tools/.vault-token
-                sleep 2700
+                vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" > /custom-tools/.vault-token
+                sleep 30
               done
         - name: argocd-repo-server
           #! Set some env-vars to enable vault access
@@ -52,5 +74,6 @@ spec:
           #    value: "ksops-role"
           volumeMounts:
             - name: custom-tools
+              #! Kustomize/sops will automatically pick up the token from $HOME/.vault-token
               mountPath: /home/argocd/.vault-token
               subPath: .vault-token
