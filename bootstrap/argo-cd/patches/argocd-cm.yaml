@@ -6,7 +6,7 @@ data:
   timeout.reconciliation: "15s"
   # Info (for later):private Helm repositories might require more configuration
   # https://github.com/argoproj/argo-cd/issues/10745
-  kustomize.buildOptions: "--enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone"
+  kustomize.buildOptions: "--enable-alpha-plugins  --enable-exec --enable-helm --load-restrictor LoadRestrictionsNone"
   #! TODO: Set root URL to make Traefik ingress work?
   #url: https://raspi-l5ug.heldenzeit.net
   #! TODO: Is this required?

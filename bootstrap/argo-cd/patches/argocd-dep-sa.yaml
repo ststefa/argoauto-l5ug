@@ -1,4 +1,5 @@
 #! Enable mounting of the SA token. This is required so kustomize can authenticate towards vault using the kubernetes auth method
+#! Disabled because unknown token lifetime. Creating explicitly instead, see below
 apiVersion: apps/v1
 kind: Deployment
 metadata:

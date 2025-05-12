@@ -7,6 +7,8 @@ resources:
 #- github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
 #! Reference argo-cd project directly. The "stable" tag always contains the latest version. This makes argo-cd auto-update itself
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+#! Create explicit sa-token for use by vault kubernetes authn
+- argocd-repo-server-sa-token.yaml
 
 #! Use ksops to decrypt secrets on the fly
 generators:
@@ -37,12 +39,13 @@ patches:
 # Argo config tweaks
 - path: patches/argocd-cm.yaml
 - path: patches/argocd-cmd-params-cm-patch.yaml
-# Enable ksops
+#! Enable ksops
 - path: patches/argocd-dep-ksops.yaml
-# Enable vault acess
+#! Enable vault access
 - path: patches/argocd-dep-vault.yaml
-# Mount SA creds
-- path: patches/argocd-dep-sa.yaml
+#! Mount SA creds, disabled
+#- path: patches/argocd-dep-sa.yaml
+
 
 configMapGenerator:
 - name: argocd-cm

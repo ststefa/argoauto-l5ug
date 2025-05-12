@@ -1,0 +1,8 @@
+#! Create explicit sa-token for use by vault kubernetes authn
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-repo-server-token
+  annotations:
+    kubernetes.io/service-account.name: argocd-repo-server
+type: kubernetes.io/service-account-token
