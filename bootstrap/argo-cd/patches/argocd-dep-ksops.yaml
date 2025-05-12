@@ -16,27 +16,30 @@ spec:
       initContainers:
         - name: install-ksops
           image: viaductoss/ksops:v4.3.3
-          command: ["/bin/sh", "-c"]
-          args:
-            - set -x;
-              set -eu;
-              cp -pv ksops /custom-tools/;
-              cp -pv kustomize /custom-tools/;
-              echo "Done.";
+          command:
+            - sh
+            - -c
+            - |
+              set -x
+              set -eu
+              cp -pv ksops /custom-tools/
+              cp -pv kustomize /custom-tools/
+              echo "Done."
           volumeMounts:
             - mountPath: /custom-tools
               name: custom-tools
-        - name: install-curl
-          image: curlimages/curl:8.13.0
-          command: ["/bin/sh", "-c"]
-          args:
-            - set -x;
-              set -eu;
-              cp -pv /usr/bin/curl /custom-tools/;
-              echo "Done.";
-          volumeMounts:
-            - mountPath: /custom-tools
-              name: custom-tools
+        #! Does not work, libs missing. Find static version if desired.
+        #- name: install-curl
+        #  image: curlimages/curl:8.13.0
+        #  command: ["/bin/sh", "-c"]
+        #  args:
+        #    - set -x;
+        #      set -eu;
+        #      cp -pv /usr/bin/curl /custom-tools/;
+        #      echo "Done.";
+        #  volumeMounts:
+        #    - mountPath: /custom-tools
+        #      name: custom-tools
       # 3. Volume mount the custom binary to the bin directory (overriding the existing version)
       containers:
         - name: argocd-repo-server
@@ -48,9 +51,9 @@ spec:
             - mountPath: /usr/local/bin/ksops
               name: custom-tools
               subPath: ksops
-            - mountPath: /usr/local/bin/curl
-              name: custom-tools
-              subPath: curl
+            #- mountPath: /usr/local/bin/curl
+            #  name: custom-tools
+            #  subPath: curl
         ## If you use AWS or GCP KMS, don't forget to include the necessary credentials to decrypt the secrets!
         #  - name: AWS_ACCESS_KEY_ID
         #    valueFrom:

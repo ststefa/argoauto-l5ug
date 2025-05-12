@@ -5,20 +5,42 @@ metadata:
 spec:
   template:
     spec:
+      initContainers:
+        - name: vault-auth
+          image: hashicorp/vault:1.19.3
+          env:
+            - name: VAULT_ADDR
+              value: "https://vault.heldenzeit.net"
+          volumeMounts:
+            - mountPath: /custom-tools
+              name: custom-tools
+          command:
+            - sh
+            - -c
+            - |
+              set -x
+              set -eu
+              TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
+              echo "$TOKEN" > /custom-tools/.vault-token
       containers:
-        #! Add a vault container for debugging
+        #! Add a vault container for debugging. TODO: remove
         - name: vault-cli
           image: hashicorp/vault:1.19.3
           command: ["sleep", "infinity"]
           env:
             - name: VAULT_ADDR
               value: "https://vault.heldenzeit.net"
-        #! Set some env-vars to enable vault access
         - name: argocd-repo-server
-          env:
-            - name: VAULT_ADDR
-              value: "https://vault.heldenzeit.net"
-            - name: VAULT_AUTH_METHOD
-              value: "kubernetes"
-            - name: VAULT_ROLE
-              value: "ksops-role"
+          #! Set some env-vars to enable vault access
+          #! These are no longer required because of vault-auth init container
+          #env:
+          #  - name: VAULT_ADDR
+          #    value: "https://vault.heldenzeit.net"
+          #  - name: VAULT_AUTH_METHOD
+          #    value: "kubernetes"
+          #  - name: VAULT_ROLE
+          #    value: "ksops-role"
+          volumeMounts:
+            - mountPath: /home/argocd/.vault-token
+              name: custom-tools
+              subPath: .vault-token
