@@ -55,10 +55,10 @@ spec:
             - |
               while true ; do
                 date
-                echo "Regenerating vault token..."
+                echo "Refreshing vault token..."
                 vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" > /custom-tools/.vault-token
                 echo "done. Sleeping..."
-                sleep 30
+                sleep 2700
               done
         - name: argocd-repo-server
           #! Set some env-vars to enable vault access
