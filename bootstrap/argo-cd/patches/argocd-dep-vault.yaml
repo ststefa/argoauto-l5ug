@@ -29,7 +29,7 @@ spec:
             - name: custom-tools
               mountPath: /custom-tools
       containers:
-        #! Add a vault container for debugging. TODO: remove
+        #! Add a vault container for debugging
         - name: vault-cli
           image: hashicorp/vault:1.19.3
           command: ["sleep", "infinity"]
@@ -39,7 +39,7 @@ spec:
           volumeMounts:
             - name: custom-tools
               mountPath: /custom-tools
-        #! Refresh token in intervals. It is crucial that the container does not fail because it will break the pod, which in turn breaks the whole argocd loop
+        #! Refresh token in intervals. It is crucial that the container does not fail because it will break the pod, which in turn breaks argocd. I.e., do not "set -e".
         #! Make sure that the token lifetime is longer than the loop interval
         - name: vault-token-refresher
           image: hashicorp/vault:1.19.3
@@ -58,7 +58,7 @@ spec:
                 echo "Refreshing vault token..."
                 vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" > /custom-tools/.vault-token
                 echo "done. Sleeping..."
-                sleep 2700
+                sleep 3300
               done
         - name: argocd-repo-server
           #! Set some env-vars to enable vault access
