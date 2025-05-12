@@ -16,29 +16,29 @@ spec:
           volumeMounts:
             - name: custom-tools
               mountPath: /custom-tools
-        - name: vault-token-generator
-          image: hashicorp/vault:1.19.3
-          env:
-            - name: VAULT_ADDR
-              value: "https://vault.heldenzeit.net"
-          volumeMounts:
-            - name: custom-tools
-              mountPath: /custom-tools
-          command:
-            - sh
-            - -c
-            - |
-              set -x
-              set -eu
-              while true ; do
-                date
-                ls -la /
-                ls -la /custom-tools
-                echo "Regenerating vault token"
-                TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
-                echo "$TOKEN" > /custom-tools/.vault-token
-                sleep 2700
-              done
+        #- name: vault-token-generator
+        #  image: hashicorp/vault:1.19.3
+        #  env:
+        #    - name: VAULT_ADDR
+        #      value: "https://vault.heldenzeit.net"
+        #  volumeMounts:
+        #    - name: custom-tools
+        #      mountPath: /custom-tools
+        #  command:
+        #    - sh
+        #    - -c
+        #    - |
+        #      set -x
+        #      set -eu
+        #      while true ; do
+        #        date
+        #        ls -la /
+        #        ls -la /custom-tools
+        #        echo "Regenerating vault token"
+        #        TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
+        #        echo "$TOKEN" > /custom-tools/.vault-token
+        #        sleep 2700
+        #      done
         - name: argocd-repo-server
           #! Set some env-vars to enable vault access
           #! These are no longer required because of vault-auth init container
