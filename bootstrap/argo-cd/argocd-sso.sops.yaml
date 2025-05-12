@@ -1,0 +1,20 @@
+#! Secret which is referenced from argocd-cm-auth.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+    name: argocd-sso
+    labels:
+        app.kubernetes.io/part-of: argocd
+stringData:
+    oidc.clientSecret: ENC[AES256_GCM,data:HMN/GknMEzP8jf4y0oNutl04nmMBvg9bUXAHpjSZwaaWleFv/xIFMIHNPqQNU8DjDtv20IUnuXUyF2V/fUpRiUoVxfJvr2Te3Jzg,iv:69Lv/AzauZF2Og/pXnxRu/oaVnwh1ftEpnUjGbHhgfg=,tag:McDJmtaf0Z/+n7XrQvgwxQ==,type:str]
+sops:
+    hc_vault:
+        - vault_address: https://vault.heldenzeit.net
+          engine_path: transit
+          key_name: sops
+          created_at: "2025-05-10T15:45:06Z"
+          enc: vault:v1:1E7dLbgVFkhPolN6rQZpHWEdW1J0JAfg2VEYkrCHBo6jNWYbFxyRLwltNIJ0S7VgEmUlqxrXB9uovxiJ
+    lastmodified: "2025-05-12T08:07:38Z"
+    mac: ENC[AES256_GCM,data:oeE4aULyn9Fcx8zw+PFIUH38MpGIPJwyg+0Ys6fS6MyyjIElyn+R+OLgaP8zfxUIhTydvxrY5bUVCjYAs8kpbmPnjDM2tjFXam+VazSwFNusBbb9ntAusv3Idj0DsSzeSxnJ9CpBVKGGOatKM0NKNIKLPQgYAigebnTzas5sPxY=,iv:63xSIZGo/xOYnV1V+QFzR/49fMDWgFmSGKHpbVO+iLM=,tag:STegFE69XbK9+QFxw5WEQQ==,type:str]
+    encrypted_regex: oidc.clientSecret
+    version: 3.10.1

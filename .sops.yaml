@@ -1,9 +1,9 @@
 creation_rules:
-  - path_regex: bootstrap/argo-cd/patches/argocd-repo-creds.sops.yaml
+  - path_regex: bootstrap/argo-cd/argocd-repo-creds.sops.yaml
     encrypted_regex: sshPrivateKey
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
-  - path_regex: bootstrap/argo-cd/patches/argocd-sso.sops.yaml
+  - path_regex: bootstrap/argo-cd/argocd-sso.sops.yaml
     encrypted_regex: oidc.clientSecret
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops

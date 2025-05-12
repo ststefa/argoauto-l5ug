@@ -11,19 +11,20 @@ resources:
 - argocd-repo-server-sa.yaml
 
 #! Use ksops to decrypt secrets on the fly
-#generators:
-#  - |
-#    apiVersion: viaduct.ai/v1
-#    kind: ksops
-#    metadata:
-#      name: example-secret-generator
-#      annotations:
-#        config.kubernetes.io/function: |
-#            exec:
-#              # ksops must be reachable by $PATH
-#              path: ksops
-#    files:
-#    - ./patches/argocd-repo-creds.sops.yaml
+generators:
+  - |
+    apiVersion: viaduct.ai/v1
+    kind: ksops
+    metadata:
+      name: example-secret-generator
+      annotations:
+        config.kubernetes.io/function: |
+            exec:
+              # ksops must be reachable by $PATH
+              path: ksops
+    files:
+    - ./argocd-repo-creds.sops.yaml
+    - ./argocd-sso.sops.yaml
 
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
@@ -49,8 +50,6 @@ patches:
 - path: patches/argocd-dep-vault.yaml
 #! Groups and policies
 #- path: patches/argocd-rbac-cm.yaml
-#! Credentials to access private repo over ssh
-- path: patches/argocd-repo-creds.sops.yaml
 #! SSO client secret
 #- path: patches/argocd-sso.sops
 
