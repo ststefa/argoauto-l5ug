@@ -26,8 +26,8 @@ spec:
               cp -pv kustomize /custom-tools/
               echo "Done."
           volumeMounts:
-            - mountPath: /custom-tools
-              name: custom-tools
+            - name: custom-tools
+              mountPath: /custom-tools
         #! Does not work, libs missing. Find static version if desired.
         #- name: install-curl
         #  image: curlimages/curl:8.13.0
@@ -38,21 +38,21 @@ spec:
         #      cp -pv /usr/bin/curl /custom-tools/;
         #      echo "Done.";
         #  volumeMounts:
-        #    - mountPath: /custom-tools
-        #      name: custom-tools
+        #    - name: custom-tools
+        #      mountPath: /custom-tools
       # 3. Volume mount the custom binary to the bin directory (overriding the existing version)
       containers:
         - name: argocd-repo-server
           volumeMounts:
             #! Do not overlay original kustomize
-            #- mountPath: /usr/local/bin/kustomize
-            #  name: custom-tools
+            #- name: custom-tools
+            #  mountPath: /usr/local/bin/kustomize
             #  subPath: kustomize
-            - mountPath: /usr/local/bin/ksops
-              name: custom-tools
+            - name: custom-tools
+              mountPath: /usr/local/bin/ksops
               subPath: ksops
-            #- mountPath: /usr/local/bin/curl
-            #  name: custom-tools
+            #- name: custom-tools
+            #  mountPath: /usr/local/bin/curl
             #  subPath: curl
         ## If you use AWS or GCP KMS, don't forget to include the necessary credentials to decrypt the secrets!
         #  - name: AWS_ACCESS_KEY_ID

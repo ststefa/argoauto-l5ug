@@ -13,6 +13,9 @@ spec:
           env:
             - name: VAULT_ADDR
               value: "https://vault.heldenzeit.net"
+          volumeMounts:
+            - name: custom-tools
+              mountPath: /custom-tools
         - name: vault-token-generator
           image: hashicorp/vault:1.19.3
           env:
