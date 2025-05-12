@@ -5,8 +5,15 @@ metadata:
 spec:
   template:
     spec:
-      initContainers:
-        - name: vault-auth
+      containers:
+        #! Add a vault container for debugging. TODO: remove
+        - name: vault-cli
+          image: hashicorp/vault:1.19.3
+          command: ["sleep", "infinity"]
+          env:
+            - name: VAULT_ADDR
+              value: "https://vault.heldenzeit.net"
+        - name: vault-token-generator
           image: hashicorp/vault:1.19.3
           env:
             - name: VAULT_ADDR
@@ -20,16 +27,13 @@ spec:
             - |
               set -x
               set -eu
-              TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
-              echo "$TOKEN" > /custom-tools/.vault-token
-      containers:
-        #! Add a vault container for debugging. TODO: remove
-        - name: vault-cli
-          image: hashicorp/vault:1.19.3
-          command: ["sleep", "infinity"]
-          env:
-            - name: VAULT_ADDR
-              value: "https://vault.heldenzeit.net"
+              while true ; do
+                date
+                echo "Regenerating vault token"
+                TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
+                echo "$TOKEN" > /custom-tools/.vault-token
+                sleep 2700
+              done
         - name: argocd-repo-server
           #! Set some env-vars to enable vault access
           #! These are no longer required because of vault-auth init container
