@@ -1,0 +1,23 @@
+#! k8s-vault-authn requires system:auth-delegator for the SA using it
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-repo-server-vault-accessor-crb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: argocd-repo-server
+    namespace: argocd
+---
+#! Create long-lived sa-token for use by vault kubernetes authn
+#! Using an adhoc secret (i.e. "kubectl create token argocd-repo-server -n argocd") works but breaks if token changes, which happens frequently. Maybe there is a way around this?
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-repo-server-token
+  annotations:
+    kubernetes.io/service-account.name: argocd-repo-server
+type: kubernetes.io/service-account-token

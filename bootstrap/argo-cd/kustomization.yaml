@@ -8,7 +8,7 @@ resources:
 #! Reference argo-cd project directly. The "stable" tag always contains the latest version. This makes argo-cd auto-update itself
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 #! CRB to enable vault-authn
-- argocd-repo-server-crb.yaml
+- argocd-repo-server-sa.yaml
 
 #! Use ksops to decrypt secrets on the fly
 #generators:
@@ -38,13 +38,21 @@ patches:
 #    kind: StatefulSet
 # Argo config tweaks
 - path: patches/argocd-cm.yaml
+#! OIDC config
+#- path: patches/argocd-cm-auth.yaml
 - path: patches/argocd-cmd-params-cm-patch.yaml
 #! Enable ksops
 - path: patches/argocd-dep-ksops.yaml
-#! Enable vault access
-- path: patches/argocd-dep-vault.yaml
 #! Mount SA creds
 - path: patches/argocd-dep-sa.yaml
+#! Enable vault access
+- path: patches/argocd-dep-vault.yaml
+#! Groups and policies
+#- path: patches/argocd-rbac-cm.yaml
+#! Credentials to access private repo over ssh
+#- path: patches/argocd-repo-creds.sops.yaml
+#! SSO client secret
+#- path: patches/argocd-sso.sops
 
 
 configMapGenerator:
