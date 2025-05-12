@@ -1,4 +1,5 @@
 #! Create explicit sa-token for use by vault kubernetes authn
+#! Maybe not required?
 apiVersion: v1
 kind: Secret
 metadata:
@@ -6,3 +7,16 @@ metadata:
   annotations:
     kubernetes.io/service-account.name: argocd-repo-server
 type: kubernetes.io/service-account-token
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vso-vault-accessor-crb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: argocd-repo-server
+    namespace: argocd
