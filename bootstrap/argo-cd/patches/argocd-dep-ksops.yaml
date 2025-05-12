@@ -18,9 +18,21 @@ spec:
           image: viaductoss/ksops:v4.3.3
           command: ["/bin/sh", "-c"]
           args:
-            - set -xeu;
+            - set -x;
+            - set -eu;
               cp -pv ksops /custom-tools/;
               cp -pv kustomize /custom-tools/;
+              echo "Done.";
+          volumeMounts:
+            - mountPath: /custom-tools
+              name: custom-tools
+        - name: install-curl
+          image: curlimages/curl:8.13.0
+          command: ["/bin/sh", "-c"]
+          args:
+            - set -x;
+            - set -eu;
+              cp -pv /usr/bin/curl /custom-tools/;
               echo "Done.";
           volumeMounts:
             - mountPath: /custom-tools
@@ -36,6 +48,9 @@ spec:
             - mountPath: /usr/local/bin/ksops
               name: custom-tools
               subPath: ksops
+            - mountPath: /usr/local/bin/curl
+              name: custom-tools
+              subPath: curl
         ## If you use AWS or GCP KMS, don't forget to include the necessary credentials to decrypt the secrets!
         #  - name: AWS_ACCESS_KEY_ID
         #    valueFrom:
