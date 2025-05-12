@@ -1,4 +1,3 @@
-#! Set some env-vars to enable vault access
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,18 +5,12 @@ metadata:
 spec:
   template:
     spec:
-      #! create a vault dir that is mounted by vault and argocd
-      volumes:
-        - name: vault
-          emptyDir: {}
       containers:
-        #! add a vault container for debugging
+        #! Add a vault container for debugging
         - name: vault-cli
           image: hashicorp/vault:1.19.3
           command: ["sleep", "infinity"]
-          volumeMounts:
-            - name: vault
-              mountPath: /vault
+        #! Set some env-vars to enable vault access
         - name: argocd-repo-server
           env:
             - name: VAULT_ADDR
@@ -26,7 +19,3 @@ spec:
               value: "kubernetes"
             - name: VAULT_ROLE
               value: "ksops-role"
-        #! attach the vault container for debugging
-          volumeMounts:
-            - name: vault
-              mountPath: /vault
