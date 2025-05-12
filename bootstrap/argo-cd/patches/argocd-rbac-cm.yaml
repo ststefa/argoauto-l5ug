@@ -1,0 +1,14 @@
+#! Overview - https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
+#! Example - https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-rbac-cm-yaml/
+#! Testing - https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#validating-and-testing-your-rbac-policies
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+data:
+  policy.csv: |
+    g, "k8s_admin", role:admin
+    g, "k8s_editor", role:readonly
+    g, "k8s_viewer", role:readonly
+  #policy.default: role:readonly
+  scopes: '[groups, username]'
