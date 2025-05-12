@@ -15,7 +15,7 @@ spec:
             - |
               set -x
               set -eu
-              date --iso-8601=seconds
+              date
               echo "Generating inital vault token"
               TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login \
                 role=ksops-role \
@@ -55,7 +55,7 @@ spec:
             - |
               set -x
               while true ; do
-                date --iso-8601=seconds
+                date
                 ls -la /
                 ls -la /custom-tools
                 echo "Regenerating vault token"
