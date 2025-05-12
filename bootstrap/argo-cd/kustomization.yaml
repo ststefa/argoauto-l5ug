@@ -2,14 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
 
-resources:
-#! Original references argo-cd indirectly
-#- github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
-#! Reference argo-cd project directly. The "stable" tag always contains the latest version. This makes argo-cd auto-update itself
-- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-#! CRB to enable vault-authn
-- argocd-repo-server-sa.yaml
-
 #! Use ksops to decrypt secrets on the fly
 generators:
   - |
@@ -26,6 +18,14 @@ generators:
     - ./argocd-repo-creds.sops.yaml
     - ./argocd-sso.sops.yaml
 
+resources:
+#! Original references argo-cd indirectly
+#- github.com/argoproj-labs/argocd-autopilot/manifests/base?ref=v0.4.15
+#! Reference argo-cd project directly. The "stable" tag always contains the latest version. This makes argo-cd auto-update itself
+- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+#! CRB to enable vault-authn
+- argocd-repo-server-sa.yaml
+
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
 ##! This is no longer required. I accidentally used a 32bit k3s, leading to the node being "arm", not "arm64". And there's no image for "arm".
@@ -37,10 +37,11 @@ patches:
 #  target:
 #    labelSelector: app.kubernetes.io/part-of=argocd
 #    kind: StatefulSet
-# Argo config tweaks
-- path: patches/argocd-cm.yaml
 #! OIDC config
-#- path: patches/argocd-cm-auth.yaml
+- path: patches/argocd-cm-auth.yaml
+#! Argo config tweaks
+- path: patches/argocd-cm.yaml
+#! Some tweaks
 - path: patches/argocd-cmd-params-cm-patch.yaml
 #! Enable ksops
 - path: patches/argocd-dep-ksops.yaml
@@ -49,9 +50,7 @@ patches:
 #! Enable vault access
 - path: patches/argocd-dep-vault.yaml
 #! Groups and policies
-#- path: patches/argocd-rbac-cm.yaml
-#! SSO client secret
-#- path: patches/argocd-sso.sops
+- path: patches/argocd-rbac-cm.yaml
 
 
 configMapGenerator:
