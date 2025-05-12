@@ -7,20 +7,20 @@ spec:
     spec:
       initContainers:
         #! Generate initial vault token. This has to happen in an initContainer because the file has to be present at the time it is mounted by the argocd-repo-server container. If the file is not present at that moment, then /custom-tools/.vault-token irreversibly becomes a directory, breaking the whole process!
-        - name: vault-auth
+        #! The initContainer is a friend because it prevents the old ReplicaSet from being discarded if something fails with vault. This is a safety net!
+        - name: vault-token-init
           image: hashicorp/vault:1.15
           command:
             - sh
             - -c
             - |
-              set -x
               set -eu
               date
               echo "Generating inital vault token"
-              TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login \
+              vault write -field=token auth/kubernetes-l5ug/login \
                 role=ksops-role \
-                jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
-              echo "$TOKEN" > /custom-tools/.vault-token
+                jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+                > /custom-tools/.vault-token
               echo Done
           env:
             - name: VAULT_ADDR
@@ -53,13 +53,11 @@ spec:
             - sh
             - -c
             - |
-              set -x
               while true ; do
                 date
-                ls -la /
-                ls -la /custom-tools
-                echo "Regenerating vault token"
+                echo "Regenerating vault token..."
                 vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" > /custom-tools/.vault-token
+                echo "done. Sleeping..."
                 sleep 30
               done
         - name: argocd-repo-server
