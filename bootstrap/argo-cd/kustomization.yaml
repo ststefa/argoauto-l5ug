@@ -43,8 +43,8 @@ patches:
 - path: patches/argocd-dep-ksops.yaml
 #! Enable vault access
 - path: patches/argocd-dep-vault.yaml
-#! Mount SA creds, disabled
-#- path: patches/argocd-dep-sa.yaml
+#! Mount SA creds
+- path: patches/argocd-dep-sa.yaml
 
 
 configMapGenerator:
