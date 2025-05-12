@@ -19,7 +19,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - set -x;
-            - set -eu;
+              set -eu;
               cp -pv ksops /custom-tools/;
               cp -pv kustomize /custom-tools/;
               echo "Done.";
@@ -31,7 +31,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - set -x;
-            - set -eu;
+              set -eu;
               cp -pv /usr/bin/curl /custom-tools/;
               echo "Done.";
           volumeMounts:
