@@ -3,11 +3,12 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
+  #! Repo polling interval
   timeout.reconciliation: "15s"
   # Info (for later):private Helm repositories might require more configuration
   # https://github.com/argoproj/argo-cd/issues/10745
   kustomize.buildOptions: "--enable-alpha-plugins  --enable-exec --enable-helm --load-restrictor LoadRestrictionsNone"
-  #! TODO: Set root URL to make Traefik ingress work?
-  #url: https://raspi-l5ug.heldenzeit.net
-  #! TODO: Is this required?
+  # Argo CD's externally facing base URL (optional). Required when configuring SSO
+  url: https://argo.l5ug.nom.cx/
+  # exec.enabled indicates whether the UI exec feature is enabled. It is disabled by default.
   exec.enabled: "true"

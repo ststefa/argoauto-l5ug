@@ -15,14 +15,12 @@ spec:
       # 2. Use an init container to download/copy custom binaries into the emptyDir
       initContainers:
         - name: install-ksops
-          # Match Argo CD Go version
           image: viaductoss/ksops:v4.3.3
           command: ["/bin/sh", "-c"]
           args:
-            - set -x;
-              echo "Installing KSOPS...";
-              mv ksops /custom-tools/;
-              mv kustomize /custom-tools/;
+            - set -xeu;
+              cp -pv ksops /custom-tools/;
+              cp -pv kustomize /custom-tools/;
               echo "Done.";
           volumeMounts:
             - mountPath: /custom-tools
