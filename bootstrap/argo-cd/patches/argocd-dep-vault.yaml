@@ -19,8 +19,8 @@ spec:
             - name: VAULT_ADDR
               value: "https://vault.heldenzeit.net"
           volumeMounts:
-            - mountPath: /custom-tools
-              name: custom-tools
+            - name: custom-tools
+              mountPath: /custom-tools
           command:
             - sh
             - -c
@@ -29,6 +29,8 @@ spec:
               set -eu
               while true ; do
                 date
+                ls -la /
+                ls -la /custom-tools
                 echo "Regenerating vault token"
                 TOKEN=$(vault write -field=token auth/kubernetes-l5ug/login role=ksops-role jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)")
                 echo "$TOKEN" > /custom-tools/.vault-token
@@ -45,6 +47,6 @@ spec:
           #  - name: VAULT_ROLE
           #    value: "ksops-role"
           volumeMounts:
-            - mountPath: /home/argocd/.vault-token
-              name: custom-tools
+            - name: custom-tools
+              mountPath: /home/argocd/.vault-token
               subPath: .vault-token
