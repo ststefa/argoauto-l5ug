@@ -1,9 +1,11 @@
+#! https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-cm-yaml/#argocd-cmyaml-example
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
   #! Repo polling interval. Rather a safety net as refreshs are performed manually anyway while developing. Do not set too low in order to save CPU cycles. Default ist 180.
+  #! There is also a webhook feature for instant refresh which can be used if the git provider can access argocd, see https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/. This is currently not possible for me unless I move the repo to gitlab or forgejo
   timeout.reconciliation: "300s"
   # Info (for later):private Helm repositories might require more configuration
   # https://github.com/argoproj/argo-cd/issues/10745

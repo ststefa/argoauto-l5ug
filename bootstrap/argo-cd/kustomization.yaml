@@ -28,7 +28,7 @@ resources:
 
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
-##! This is no longer required. I accidentally used a 32bit k3s, leading to the node being "arm", not "arm64". And there's no image for "arm".
+##! This is no longer required. I accidentally used a 32bit k3s (armhf), leading to the node being "arm", not "arm64".
 #- path: patches/arch-amd64.yaml
 #  target:
 #    labelSelector: app.kubernetes.io/part-of=argocd

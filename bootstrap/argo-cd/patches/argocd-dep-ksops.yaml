@@ -1,6 +1,7 @@
 #! Derived from https://github.com/viaduct-ai/kustomize-sops#ksops-repo-sever-patch
 #! Copy the ksops binary into the argocd-repo-server container, thereby making it usable in a kustomize pipeline
 #! Attention! A similar but outdated approach using ksops.so is on https://hub.docker.com/r/viaductoss/ksops
+#! There is also an official way to attach custom tooling called ConfigManagementPlugins, however that looks quite complicated, see https://argo-cd.readthedocs.io/en/stable/operator-manual/config-management-plugins/
 apiVersion: apps/v1
 kind: Deployment
 metadata:
