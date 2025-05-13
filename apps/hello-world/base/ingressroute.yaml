@@ -1,23 +1,7 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: simple-service
-  namespace: foo
-spec:
-  ports:
-    - name: whoami
-      protocol: TCP
-      port: 1234
-      targetPort: 8080
-  selector:
-    app: trivial-go-web-app
-  type: ClusterIP
----
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: simple-route
-  namespace: foo
 spec:
   entryPoints:
     - websecure
@@ -28,4 +12,4 @@ spec:
       services:
         - name: simple-service
           namespace: foo
-          port: 1234
+          port: 80
