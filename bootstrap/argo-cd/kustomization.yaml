@@ -25,6 +25,8 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 #! CRB to enable vault-authn
 - argocd-repo-server-sa.yaml
+#! Traefik ingressoute for Web access
+- argocd-ingressroute.yaml
 
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
