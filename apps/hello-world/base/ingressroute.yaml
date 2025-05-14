@@ -13,3 +13,5 @@ spec:
         - name: simple-service
           namespace: foo
           port: 80
+  tls:
+    certResolver: myresolver
