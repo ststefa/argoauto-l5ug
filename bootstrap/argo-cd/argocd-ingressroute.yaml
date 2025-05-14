@@ -1,7 +1,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: argo-route
+  name: argo-ingressroute
 spec:
   entryPoints:
     - websecure
