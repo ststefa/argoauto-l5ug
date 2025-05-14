@@ -4,5 +4,3 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: Prune=false
   name: argocd
-spec: {}
-status: {}
