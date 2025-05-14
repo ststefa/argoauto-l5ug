@@ -1,0 +1,17 @@
+# see https://json.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: csinfs
+
+helmCharts:
+  - name: csi-driver-nfs
+    includeCRDs: true
+    version: 4.11.0
+    repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+    #valuesFile: csinfs-values.yaml
+    namespace: csinfs
+
+resources:
+- csinfs-ns.yaml
+- csinfs-storageclass.yaml

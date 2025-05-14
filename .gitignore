@@ -1,2 +1,5 @@
 # The vscode sops plugin on-the-fly-decryption creates (and usually also deletes) these. Just a safety net.
 .decrypted*
+
+# Local kustomize builds might inflate charts if helm is used
+charts
