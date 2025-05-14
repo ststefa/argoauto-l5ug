@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: default
+
+generators:
+  - |
+    apiVersion: viaduct.ai/v1
+    kind: ksops
+    metadata:
+      name: example-secret-generator
+      annotations:
+        config.kubernetes.io/function: |
+            exec:
+              # ksops must be reachable by $PATH
+              path: ksops
+    files:
+    - tls-secret.sops.yaml
+
+resources:
+  - tls-store.yaml

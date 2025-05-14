@@ -1,3 +1,5 @@
+#! Infix ".sops" into files that have secrets, e.g. "file.info.txt" becomes  "file.info.sops.txt"
+#! Specify precisely and minimalastically what to encrypt, i.e. do *not* encrypt what is not a secret!
 creation_rules:
   - path_regex: bootstrap/argo-cd/argocd-repo-creds.sops.yaml
     encrypted_regex: sshPrivateKey
@@ -7,11 +9,13 @@ creation_rules:
     encrypted_regex: oidc.clientSecret
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
-  # As a safety net, encrypt fields typically used in Secret objects. This rule
-  # should not be used and is just for catching unencrypted secrets before
-  #  commit. If you have a secret, add it explicitly above!
-  # Make sure to not encrypt non-sensitive values as every encrypted value
-  # makes things harder to understand.
+  - path_regex: platform/traefik/tls-secret.sops.yaml
+    encrypted_regex: tls.key
+    input_type: yaml
+    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+  #! An invalid safety net rule to catch unencrypted secrets.
+  #! Make sure to not encrypt non-sensitive values as every encrypted value
+  #! makes things harder to understand.
   - path_regex: .*\.sops\.yaml$
     encrypted_regex: ^(data|stringData)$
-    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+    hc_vault_transit_uri: https://localhost/v1/transit/keys/!!create_an_explicit_rule!!
