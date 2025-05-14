@@ -9,8 +9,12 @@ creation_rules:
     encrypted_regex: oidc.clientSecret
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
-  - path_regex: platform/traefik/tls-secret.sops.yaml
+  - path_regex: kbase/traefik/tls-secret.sops.yaml
     encrypted_regex: tls.key
+    input_type: yaml
+    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+  - path_regex: kbase/traefik/namecheap-api-token.sops.yaml
+    encrypted_regex: api-token
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
   #! An invalid safety net rule to catch unencrypted secrets.
