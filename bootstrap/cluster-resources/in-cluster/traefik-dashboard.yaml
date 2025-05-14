@@ -1,9 +1,10 @@
 # Used to modify the traefik helmchart which is part of k3s
+#! This spreads traefik setup among in-cluster and kbase/traefik. Maybe not install k3s with trafik and do the full thing in kbase/traefik instead?
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
 metadata:
   name: traefik
-  namespace: traefik
+  namespace: kube-system
 spec:
   #! Expose API via Host, not path, because path-matching might be ambiguous
   #! Port 80 conflicts with host-level http (homebridge). I only use 443 for k3s
@@ -21,3 +22,27 @@ spec:
     ports:
       web:
         exposedPort: 81
+
+    additionalArguments:
+      - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=namecheap"
+      - "--certificatesresolvers.myresolver.acme.email=admin@nom.cx"
+      - "--certificatesresolvers.myresolver.acme.storage=/data/acme.json"
+
+    env:
+      - name: NAMECHEAP_API_USER
+        value: ststefa
+      #! Must be created manually for now. Moving traefik to own namespace is the proper solution but requires uninstalling the k3s-bundled version and use k8base/traefik instead
+      #- name: NAMECHEAP_API_KEY
+      #  valueFrom:
+      #    secretKeyRef:
+      #      name: namecheap-api
+      #      key: api-token
+
+    #volumes:
+    #  - name: acme
+    #    persistentVolumeClaim:
+    #      claimName: traefik-acme
+    #volumeMounts:
+    #  - mountPath: /data
+    #    name: acme
