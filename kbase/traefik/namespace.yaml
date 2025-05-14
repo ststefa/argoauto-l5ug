@@ -1,0 +1,5 @@
+#! manually added trying to change namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: traefik
