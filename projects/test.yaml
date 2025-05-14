@@ -5,7 +5,6 @@ metadata:
     argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
     argocd.argoproj.io/sync-options: PruneLast=true
     argocd.argoproj.io/sync-wave: "-2"
-  creationTimestamp: null
   name: test
   namespace: argocd
 spec:
@@ -21,15 +20,12 @@ spec:
     kind: '*'
   sourceRepos:
   - '*'
-status: {}
-
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  creationTimestamp: null
   name: test
   namespace: argocd
 spec:
@@ -92,4 +88,3 @@ spec:
           allowEmpty: true
           prune: true
           selfHeal: true
-status: {}
