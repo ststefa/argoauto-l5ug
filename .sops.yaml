@@ -13,7 +13,7 @@ creation_rules:
     encrypted_regex: tls.key
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
-  - path_regex: kbase/traefik/namecheap-api-token.sops.yaml
+  - path_regex: kbase/traefik/traefik-namecheap-token.sops.yaml
     encrypted_regex: api-token
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops

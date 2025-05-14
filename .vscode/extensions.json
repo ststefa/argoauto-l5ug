@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "signageos.signageos-vscode-sops",
+        "aaron-bond.better-comments",
+        "streetsidesoftware.code-spell-checker"
+    ]
+}

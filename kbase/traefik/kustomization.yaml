@@ -16,9 +16,9 @@ generators:
               # ksops must be reachable by $PATH
               path: ksops
     files:
-    - namecheap-api-token.sops.yaml
-    - tls-secret.sops.yaml
+    - traefik-namecheap-token.sops.yaml
+    - traefik-tls-secret.sops.yaml
 
 resources:
-  - namespace.yaml
-  - tls-store.yaml
+  - traefik-namespace.yaml
+  - traefik-tls-store.yaml

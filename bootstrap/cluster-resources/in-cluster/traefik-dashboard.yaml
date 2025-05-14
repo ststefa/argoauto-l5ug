@@ -1,5 +1,5 @@
 # Used to modify the traefik helmchart which is part of k3s
-#! This spreads traefik setup among in-cluster and kbase/traefik. Maybe not install k3s with trafik and do the full thing in kbase/traefik instead?
+#! This spreads traefik setup among in-cluster and kbase/traefik. Maybe not install k3s with traefik and do the full thing in kbase/traefik instead?
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
 metadata:
