@@ -9,6 +9,7 @@ helmCharts:
     includeCRDs: true
     version: 4.11.0
     repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+    #! Using all defaults. Do modifications using kustomize
     #valuesFile: csinfs-values.yaml
     namespace: csinfs
 
