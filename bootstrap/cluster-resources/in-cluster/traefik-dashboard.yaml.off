@@ -32,7 +32,7 @@ spec:
     env:
       - name: NAMECHEAP_API_USER
         value: ststefa
-      #! Must be created manually for now. Moving traefik to own namespace is the proper solution but requires uninstalling the k3s-bundled version and use k8base/traefik instead
+      #! Secret must be created manually for now. Moving traefik to own namespace is the proper solution but requires uninstalling the k3s-bundled version and use k8base/traefik instead. Traefik can then become a kbase component with full kustomize/ksops capabilities
       - name: NAMECHEAP_API_KEY
         valueFrom:
           secretKeyRef:
