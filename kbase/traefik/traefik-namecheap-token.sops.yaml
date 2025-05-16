@@ -2,8 +2,6 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: namecheap-api
-    #! TODO: remove explicit namespace, declare in kustomization.yaml
-    namespace: kube-system
 type: Opaque
 stringData:
     api-token: ENC[AES256_GCM,data:cZlW3R03DghtBpIoFJnHSpC4GZyH78R541Ne7zbqTGE=,iv:FiAO5nAhA1gxiC/I7aoi3tYDy847oxhB3dvv7FqNGuo=,tag:nX56dKJtLctuFpdOVvdtbw==,type:str]
@@ -14,7 +12,7 @@ sops:
           key_name: sops
           created_at: "2025-05-14T14:45:42Z"
           enc: vault:v1:tSX4JXGBLPoR7X8LGqxTp5JetLbJLmcKnKzkL7P5wcNhDRSabhWvV89xX1GmiLI7Pli5Qu3Bmk0vmlLw
-    lastmodified: "2025-05-14T15:38:06Z"
-    mac: ENC[AES256_GCM,data:X4h5l//uHo8iwV6cPKLtiK5GrmiSEbcqoB4H43zLnb9Pfnv5OY6SgZRkDgTeizNCOM12QdwHB4+WBXE3fvxQv+XD6g4xnlKWv5Wkkm+m88bkAtujh0Hdxe/w1M/y83W8Vnx+ALrXdQXT6a7TE+CYLAjQpKeIiaJcex7/m5TXwS8=,iv:1iW2SgqkxfXyILUkN0vTPTZtwiNxSae5JvtiYCq0HNU=,tag:VGbqwYIDj3ohgCg2tMbLtA==,type:str]
+    lastmodified: "2025-05-16T09:47:50Z"
+    mac: ENC[AES256_GCM,data:KBs0L910q4xUozSHmCZbNoVkv23zhL3vBRnnJQldwet6HwBvEBv8j4IBo5Y3m1GbAFtFnXDy8DfLRy8hyIlfO9N878TE7EadYABY6/ZwuYpQIRczjmfpbvpqz+9WgESmvQ7Hnzb8NEKW+OfBQvN0ScGk6TUPfUkOG+NqhQqMgIM=,iv:vE2G8ELj1i273/XX+0MHawqH4vwLVQosPxNkk7Fv3Rw=,tag:OEujE7hekJYEyz8wdiH+0g==,type:str]
     encrypted_regex: api-token
     version: 3.10.1

@@ -1,0 +1,103 @@
+ingressRoute:
+  dashboard:
+    enabled: true
+    # -- The router match rule used for the dashboard ingressRoute
+    #matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+    #! Expose API via Host, not path, because path-matching might be ambiguous
+    matchRule: Host(`traefik.l5ug.nom.cx`)
+    # -- Specify the allowed entrypoints to use for the dashboard ingress route, (e.g. traefik, web, websecure).
+    # By default, it's using traefik entrypoint, which is not exposed.
+    # /!\ Do not expose your dashboard without any protection over the internet /!\
+    #entryPoints: ["traefik"]
+    #! Somehow the "traefik" entrypoint has problems which are not understood
+    entryPoints: ["websecure"]
+    tls:
+      #! Get TLS cert through resolver
+      certResolver: myresolver
+  healthcheck:
+    # -- Create an IngressRoute for the healthcheck probe
+    enabled: true
+    # -- The router match rule used for the healthcheck ingressRoute
+    matchRule: PathPrefix(`/ping`)
+    # -- The internal service used for the healthcheck ingressRoute
+    services:
+      - name: ping@internal
+        kind: TraefikService
+    # -- Specify the allowed entrypoints to use for the healthcheck ingress route, (e.g. traefik, web, websecure).
+    # By default, it's using traefik entrypoint, which is not exposed.
+    entryPoints: ["traefik"]
+    # -- TLS options (e.g. secret containing certificate)
+    tls: {}
+
+logs:
+  general:
+    level: INFO
+  access:
+    enabled: true
+    filters:
+      # -- Set statusCodes, to limit the access logs to requests with a status codes in the specified range
+      statuscodes: "400-499,500-599"
+      # -- Set retryAttempts, to keep the access logs when at least one retry has happened
+      retryattempts: false
+      # -- Set minDuration, to keep access logs when requests take longer than the specified duration
+      minduration: "10ms"
+
+#! Obsoleted by certificatesResolvers
+#additionalArguments:
+#  #! dns-01 resolver over namecheap. This requires additional env-vars for namecheap authn
+#  - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+#  - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=namecheap"
+#  - "--certificatesresolvers.myresolver.acme.email=admin@nom.cx"
+#  - "--certificatesresolvers.myresolver.acme.storage=/data/acme.json"
+
+env:
+  - name: NAMECHEAP_API_USER
+    value: ststefa
+  #! see traefik-namecheap-token.sops.yaml
+  - name: NAMECHEAP_API_KEY
+    valueFrom:
+      secretKeyRef:
+        name: namecheap-api
+        key: api-token
+
+ports:
+  web:
+    #! Port 80 conflicts with host-level http (homebridge). I only use 443 for k3s
+    exposedPort: 81
+
+# -- Certificates resolvers configuration.
+# Ref: https://doc.traefik.io/traefik/https/acme/#certificate-resolvers
+# See EXAMPLES.md for more details.
+certificatesResolvers:
+  myresolver:
+    acme:
+      # Email address used for registration.
+      email: "admin@nom.cx"
+      # File or key used for certificates storage.
+      storage: "acme.json"
+      tlsChallenge:
+        dnsChallenge:
+          provider: namecheap
+          # By default, the provider will verify the TXT DNS challenge record before letting ACME verify.
+          # If delayBeforeCheck is greater than zero, this check is delayed for the configured duration in seconds.
+          # Useful if internal networks block external DNS queries.
+          #! I need to set this because the TXT record is only in the external DNS which traefik cannot reach
+          delayBeforeCheck: 60
+          # Use following DNS servers to resolve the FQDN authority.
+          # Default: empty
+          # resolvers
+          # - "1.1.1.1:53"
+          # - "8.8.8.8:53"
+          # Disable the DNS propagation checks before notifying ACME that the DNS challenge is ready.
+          # NOT RECOMMENDED:
+          # Increase the risk of reaching Let's Encrypt's rate limits.
+          # Default: false
+          # disablePropagationCheck: true
+
+#volumes:
+#  - name: acme
+#    persistentVolumeClaim:
+#      claimName: traefik-acme
+#volumeMounts:
+#  - mountPath: /data
+#    name: acme
