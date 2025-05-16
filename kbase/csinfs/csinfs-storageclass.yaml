@@ -6,6 +6,7 @@ provisioner: nfs.csi.k8s.io
 parameters:
   server: blubox.heldenzeit.net
   share: /data/nfs
+  #! subDir should be unique for any cluster
   subDir: l5ug
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
