@@ -75,24 +75,23 @@ certificatesResolvers:
       email: "admin@nom.cx"
       # File or key used for certificates storage.
       storage: "acme.json"
-      tlsChallenge:
-        dnsChallenge:
-          provider: namecheap
-          # By default, the provider will verify the TXT DNS challenge record before letting ACME verify.
-          # If delayBeforeCheck is greater than zero, this check is delayed for the configured duration in seconds.
-          # Useful if internal networks block external DNS queries.
-          #! I need to set this because the TXT record is only in the external DNS which traefik cannot reach
-          delayBeforeCheck: 60
-          # Use following DNS servers to resolve the FQDN authority.
-          # Default: empty
-          # resolvers
-          # - "1.1.1.1:53"
-          # - "8.8.8.8:53"
-          # Disable the DNS propagation checks before notifying ACME that the DNS challenge is ready.
-          # NOT RECOMMENDED:
-          # Increase the risk of reaching Let's Encrypt's rate limits.
-          # Default: false
-          # disablePropagationCheck: true
+      dnsChallenge:
+        provider: namecheap
+        # By default, the provider will verify the TXT DNS challenge record before letting ACME verify.
+        # If delayBeforeCheck is greater than zero, this check is delayed for the configured duration in seconds.
+        # Useful if internal networks block external DNS queries.
+        #! I need to set this because the TXT record is only in the external DNS which traefik cannot reach
+        delayBeforeCheck: 60
+        # Use following DNS servers to resolve the FQDN authority.
+        # Default: empty
+        # resolvers
+        # - "1.1.1.1:53"
+        # - "8.8.8.8:53"
+        # Disable the DNS propagation checks before notifying ACME that the DNS challenge is ready.
+        # NOT RECOMMENDED:
+        # Increase the risk of reaching Let's Encrypt's rate limits.
+        # Default: false
+        # disablePropagationCheck: true
 
 #volumes:
 #  - name: acme
