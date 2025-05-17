@@ -40,7 +40,7 @@ logs:
       # -- Set retryAttempts, to keep the access logs when at least one retry has happened
       retryattempts: false
       # -- Set minDuration, to keep access logs when requests take longer than the specified duration
-      minduration: "10ms"
+      minduration: "1s"
 
 #! Obsoleted by certificatesResolvers
 #additionalArguments:
