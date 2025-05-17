@@ -7,9 +7,9 @@ helmCharts:
   - name: traefik
     includeCRDs: true
     #! Omitting a version defaults to latest. TODO: Is that so?
-    #version: 4.11.0
+    #version: 35.2.0
     repo: https://traefik.github.io/charts
-    releaseName: "kbase"
+    releaseName: traefik
     valuesFile: traefik-values.yaml
     namespace: traefik
 
