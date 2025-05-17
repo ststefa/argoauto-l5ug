@@ -13,7 +13,7 @@ ingressRoute:
     entryPoints: ["websecure"]
     tls:
       #! Get TLS cert through resolver
-      certResolver: myresolver
+      certResolver: letsencrypt-dns
   healthcheck:
     # -- Create an IngressRoute for the healthcheck probe
     enabled: true
@@ -65,16 +65,31 @@ ports:
     #! Port 80 conflicts with host-level http (homebridge). I only use 443 for k3s
     exposedPort: 81
 
+persistence:
+  enabled: true
+  size: 1Mi
+
+deployment:
+  initContainers:
+    - name: volume-permissions
+      image: busybox:latest
+      command: ["sh", "-c", "ls -la /; touch /data/acme.json; chmod -v 600 /data/acme.json"]
+      volumeMounts:
+      - mountPath: /data
+        name: data
+
 # -- Certificates resolvers configuration.
 # Ref: https://doc.traefik.io/traefik/https/acme/#certificate-resolvers
 # See EXAMPLES.md for more details.
 certificatesResolvers:
-  myresolver:
+  letsencrypt-dns:
     acme:
       # Email address used for registration.
       email: "admin@nom.cx"
+      #caServer: https://acme-v02.api.letsencrypt.org/directory # Production server
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory # Staging server
       # File or key used for certificates storage.
-      storage: "acme.json"
+      storage: /data/acme.json
       dnsChallenge:
         provider: namecheap
         # By default, the provider will verify the TXT DNS challenge record before letting ACME verify.

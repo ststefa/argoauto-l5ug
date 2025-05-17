@@ -14,4 +14,4 @@ spec:
           namespace: foo
           port: 80
   tls:
-    certResolver: myresolver
+    certResolver: letsencrypt-dns
