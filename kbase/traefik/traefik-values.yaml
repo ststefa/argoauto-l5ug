@@ -89,8 +89,8 @@ certificatesResolvers:
     acme:
       # Email address used for registration.
       email: "admin@nom.cx"
-      #caServer: https://acme-v02.api.letsencrypt.org/directory # Production server
-      caServer: https://acme-staging-v02.api.letsencrypt.org/directory # Staging server
+      caServer: https://acme-v02.api.letsencrypt.org/directory # Production server
+      #caServer: https://acme-staging-v02.api.letsencrypt.org/directory # Staging server
       # File or key used for certificates storage.
       storage: /data/acme.json
       dnsChallenge:
