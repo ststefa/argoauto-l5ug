@@ -26,8 +26,8 @@ generators:
               path: ksops
     files:
     - traefik-namecheap-token.sops.yaml
-    - traefik-tls-secret.sops.yaml
+    #- traefik-tls-secret.sops.yaml
 
 resources:
   - traefik-namespace.yaml
-  - traefik-tls-store.yaml
+  #- traefik-tls-store.yaml

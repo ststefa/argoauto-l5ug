@@ -29,6 +29,7 @@ ingressRoute:
     # -- TLS options (e.g. secret containing certificate)
     tls: {}
 
+#! https://doc.traefik.io/traefik/observability/logs/
 logs:
   general:
     level: INFO
@@ -41,6 +42,8 @@ logs:
       retryattempts: false
       # -- Set minDuration, to keep access logs when requests take longer than the specified duration
       minduration: "1s"
+      noColor: true
+
 
 #! Obsoleted by certificatesResolvers
 #additionalArguments:
