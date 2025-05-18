@@ -106,7 +106,8 @@ certificatesResolvers:
         # NOT RECOMMENDED:
         # Increase the risk of reaching Let's Encrypt's rate limits.
         # Default: false
-        # disablePropagationCheck: true
+        #! I need to set this because the TXT record is only in the external DNS which traefik cannot reach
+        disablePropagationCheck: true
 
 #volumes:
 #  - name: acme
