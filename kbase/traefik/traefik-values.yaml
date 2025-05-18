@@ -33,6 +33,7 @@ ingressRoute:
 logs:
   general:
     level: INFO
+    noColor: true
   access:
     enabled: true
     filters:
@@ -42,7 +43,6 @@ logs:
       retryattempts: false
       # -- Set minDuration, to keep access logs when requests take longer than the specified duration
       minduration: "1s"
-      noColor: true
 
 
 #! Obsoleted by certificatesResolvers
