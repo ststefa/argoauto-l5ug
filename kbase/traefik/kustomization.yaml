@@ -25,9 +25,11 @@ generators:
               # ksops must be reachable by $PATH
               path: ksops
     files:
-    - traefik-namecheap-token.sops.yaml
-    #- traefik-tls-secret.sops.yaml
+    - traefik-secret-namecheap.sops.yaml
+    #! Part of disabled tls-store for manual cert mgmt
+    #- traefik-secret-tls.sops.yaml
 
 resources:
-  - traefik-namespace.yaml
+  - traefik-ns.yaml
+  #! Only use for manual secret mgmt. Wil override automatic acme certificates if enabled
   #- traefik-tls-store.yaml
