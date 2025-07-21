@@ -45,7 +45,7 @@ logs:
       minduration: "1s"
 
 
-#! Obsoleted by certificatesResolvers
+#! Obsoleted by certificatesResolvers (below)
 #additionalArguments:
 #  #! dns-01 resolver over namecheap. This requires additional env-vars for namecheap authn
 #  - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
