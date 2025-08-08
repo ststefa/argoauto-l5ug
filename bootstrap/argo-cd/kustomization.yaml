@@ -15,6 +15,7 @@ generators:
               # ksops must be reachable by $PATH
               path: ksops
     files:
+    - ./argocd-clusters.sops.yaml
     - ./argocd-repo-creds.sops.yaml
     - ./argocd-sso.sops.yaml
 
