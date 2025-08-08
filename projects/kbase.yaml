@@ -9,17 +9,17 @@ metadata:
   namespace: argocd
 spec:
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: "*"
+      kind: "*"
   description: Base cluster components
   destinations:
-  - namespace: '*'
-    server: '*'
+    - namespace: "*"
+      server: "*"
   namespaceResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: "*"
+      kind: "*"
   sourceRepos:
-  - '*'
+    - "*"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -32,21 +32,25 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: git@github.com:ststefa/argoauto-l5ug.git
-      revision: "HEAD"
-      files:
-      - path: kbase/*/kustomization.yaml
+    - git:
+        repoURL: git@github.com:ststefa/argoauto-l5ug.git
+        revision: "HEAD"
+        files:
+          - path: kbase/clusters/*/*/kustomization.yaml
+        values:
+          clusterName: "{{index .path.segments 2}}"
+          componentName: "{{index .path.segments 3}}"
   template:
     metadata:
       labels:
         app.kubernetes.io/managed-by: argocd-autopilot
-        app.kubernetes.io/name: '{{ .path.basename }}'
-      name: kbase-{{ .path.basename }}
+        app.kubernetes.io/name: "{{ .values.componentName }}"
+      name: kbase-{{ .values.componentName }}
       namespace: argocd
     spec:
       destination:
-        server: "https://kubernetes.default.svc"
+        name: "{{ .values.clusterName }}"
+        #server: "https://kubernetes.default.svc"
         #! The namespace must be set by the kbase component
         #namespace:
       project: kbase
@@ -60,7 +64,7 @@ spec:
           prune: true
           selfHeal: true
       ignoreDifferences:
-      - group: argoproj.io
-        jsonPointers:
-        - /status
-        kind: Application
+        - group: argoproj.io
+          jsonPointers:
+            - /status
+          kind: Application

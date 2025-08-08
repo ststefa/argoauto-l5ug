@@ -7,7 +7,7 @@ parameters:
   server: blubox.heldenzeit.net
   share: /data/nfs
   #! subDir should be unique for any cluster
-  subDir: l5ug
+  subDir: notset
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
