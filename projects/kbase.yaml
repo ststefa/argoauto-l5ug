@@ -11,7 +11,7 @@ spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-  description: kbase project
+  description: Base cluster components
   destinations:
   - namespace: '*'
     server: '*'

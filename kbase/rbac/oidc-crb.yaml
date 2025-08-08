@@ -37,7 +37,7 @@ roleRef:
   kind: ClusterRole
   name: view
 ---
-# Additionally, everyone should be able to list nodes, see `node-reader.yaml`
+# Additionally, these roles should be able to list nodes, see `node-reader.yaml`
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
