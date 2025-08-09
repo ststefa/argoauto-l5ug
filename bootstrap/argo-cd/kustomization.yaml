@@ -33,8 +33,6 @@ resources:
 - argocd-repo-server-sa.yaml
 #! Traefik ingressroute for Web access
 - argocd-ingressroute.yaml
-#! Trusted certs for remote repos and clusters
-- argocd-tls-certs-cm.yaml
 
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
@@ -61,6 +59,8 @@ patches:
 - path: patches/argocd-dep-vault.yaml
 #! Groups and policies
 - path: patches/argocd-rbac-cm.yaml
+#! Trusted certs for remote repos and clusters
+- path: patches/argocd-tls-certs-cm.yaml
 
 
 configMapGenerator:
