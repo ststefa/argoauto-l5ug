@@ -4,10 +4,11 @@ kind: Kustomization
 namespace: traefik
 
 helmCharts:
+  #! See https://github.com/traefik/traefik-helm-chart/releases
   - name: traefik
     includeCRDs: true
     #! Omitting a version defaults to latest. TODO: Is that so?
-    #version: 35.2.0
+    version: 37.0.0
     repo: https://traefik.github.io/charts
     releaseName: traefik
     valuesFile: traefik-values.yaml
