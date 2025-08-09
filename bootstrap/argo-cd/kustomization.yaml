@@ -15,8 +15,11 @@ generators:
               # ksops must be reachable by $PATH
               path: ksops
     files:
+    #! Clusters managed by this argocd
     - ./argocd-clusters.sops.yaml
+    #! Credentials for repos used by argocd
     - ./argocd-repo-creds.sops.yaml
+    #! The client secret used for OIDC
     - ./argocd-sso.sops.yaml
 
 resources:
@@ -30,6 +33,8 @@ resources:
 - argocd-repo-server-sa.yaml
 #! Traefik ingressroute for Web access
 - argocd-ingressroute.yaml
+#! Trusted certs for remote repos and clusters
+- argocd-tls-certs-cm.yaml
 
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
@@ -42,17 +47,17 @@ patches:
 #  target:
 #    labelSelector: app.kubernetes.io/part-of=argocd
 #    kind: StatefulSet
-#! OIDC config
+#! Argo OIDC config
 - path: patches/argocd-cm-auth.yaml
 #! Argo config tweaks
 - path: patches/argocd-cm.yaml
 #! Some tweaks
 - path: patches/argocd-cmd-params-cm-patch.yaml
-#! Enable ksops
+#! Enable ksops in argocd-repo-server
 - path: patches/argocd-dep-ksops.yaml
-#! Mount SA creds
+#! Mount SA creds in argocd-repo-server
 - path: patches/argocd-dep-sa.yaml
-#! Enable vault access
+#! Enable vault access in argocd-repo-server
 - path: patches/argocd-dep-vault.yaml
 #! Groups and policies
 - path: patches/argocd-rbac-cm.yaml

@@ -1,0 +1,41 @@
+#! see https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#repositories-using-self-signed-tls-certificates-or-are-signed-by-custom-ca
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-tls-certs-cm
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  l5ug.nom.cx: |
+    -----BEGIN CERTIFICATE-----
+    MIICYjCCAgigAwIBAgIIRcTePKGieAYwCgYIKoZIzj0EAwIwIzEhMB8GA1UEAwwY
+    azNzLXNlcnZlci1jYUAxNjQ2MjEzOTk5MB4XDTIyMDMwMjA5Mzk1OVoXDTI2MDcy
+    OTA5NDIzMFowHDEMMAoGA1UEChMDazNzMQwwCgYDVQQDEwNrM3MwWTATBgcqhkjO
+    PQIBBggqhkjOPQMBBwNCAAQLvT6VsgSY76le6Z7OU0T0KObHjHA3HeIdjaUmCCEK
+    ihRBOHMKlQKVRRTnUN2pAAQDxgPGMwd5gRByiA2tZXBDo4IBKzCCAScwDgYDVR0P
+    AQH/BAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMB8GA1UdIwQYMBaAFOMKQJ2b
+    l4+eMkpfw/wtfkWxhNUrMIHeBgNVHREEgdYwgdOCCmt1YmVybmV0ZXOCEmt1YmVy
+    bmV0ZXMuZGVmYXVsdIIWa3ViZXJuZXRlcy5kZWZhdWx0LnN2Y4Ika3ViZXJuZXRl
+    cy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsggtsNXVnLm5vbS5jeIIJbG9jYWxo
+    b3N0ggpyYXNwaS1sNXVnghlyYXNwaS1sNXVnLmhlbGRlbnplaXQubmV0hwQKKwAB
+    hwR/AAABhwTAqAsbhxAAAAAAAAAAAAAAAAAAAAABhxD9srbtzq+s4N6mMv/+R8QC
+    MAoGCCqGSM49BAMCA0gAMEUCIHdvBNOCPcg2pEqa5vhhYzXXCgIgphR6jNcQa/4C
+    1wOEAiEAgcKAs7/6HBeG2qKuGI4C26YQX4o6JizZ36gycjl/ZRw=
+    -----END CERTIFICATE-----
+  6wu4.nom.cx: |
+    -----BEGIN CERTIFICATE-----
+    MIICYjCCAgigAwIBAgIINO0cCIIpIqkwCgYIKoZIzj0EAwIwIzEhMB8GA1UEAwwY
+    azNzLXNlcnZlci1jYUAxNzA3NDcyNDY1MB4XDTI0MDIwOTA5NTQyNVoXDTI2MDgw
+    NDE2MDk1OFowHDEMMAoGA1UEChMDazNzMQwwCgYDVQQDEwNrM3MwWTATBgcqhkjO
+    PQIBBggqhkjOPQMBBwNCAASnvb3MC+J7ZMKQ94PMhOeUelgy68VHFDYx0PDqoBKP
+    uDGsED5RF/wrGZbS2zxKcRcmq5rsQ486V07NGyoMp4d3o4IBKzCCAScwDgYDVR0P
+    AQH/BAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMB8GA1UdIwQYMBaAFPC2okuT
+    Yh7mFztXlL5eof/tb92AMIHeBgNVHREEgdYwgdOCCzZ3dTQubm9tLmN4ggprdWJl
+    cm5ldGVzghJrdWJlcm5ldGVzLmRlZmF1bHSCFmt1YmVybmV0ZXMuZGVmYXVsdC5z
+    dmOCJGt1YmVybmV0ZXMuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbIIJbG9jYWxo
+    b3N0ggpyYXNwaS02d3U0ghlyYXNwaS02d3U0LmhlbGRlbnplaXQubmV0hwQKKwAB
+    hwR/AAABhwTAqAschxAAAAAAAAAAAAAAAAAAAAABhxD9srbtzq+s4No63f/+mAUZ
+    MAoGCCqGSM49BAMCA0gAMEUCIQDaXWhhsRJFPBZCnjWOZVLSMwm3ELNTkB69ZPdr
+    xHZagAIgNJKLqBIRVmS96S6nIeImrvcY0h2d7CVn8I7AjFh8EaY=
+    -----END CERTIFICATE-----
