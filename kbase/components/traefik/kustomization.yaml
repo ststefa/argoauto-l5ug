@@ -34,3 +34,5 @@ resources:
   - traefik-ns.yaml
   #! Only use for manual secret mgmt. Wil override automatic acme certificates if enabled
   #- traefik-tls-store.yaml
+  #! Manually managed and kustomizable dashboard ingress
+  - traefik-ingressroute.yaml

@@ -1,0 +1,12 @@
+#! This completes the component
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+spec:
+  routes:
+  - kind: Rule
+    match: Host(`traefik.l5ug.nom.cx`)
+    services:
+    - kind: TraefikService
+      name: api@internal

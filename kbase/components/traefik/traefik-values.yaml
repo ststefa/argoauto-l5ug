@@ -1,19 +1,20 @@
 ingressRoute:
-  dashboard:
-    enabled: true
-    # -- The router match rule used for the dashboard ingressRoute
-    #matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
-    #! Expose API via Host, not path, because path-matching might be ambiguous
-    matchRule: Host(`traefik.l5ug.nom.cx`)
-    # -- Specify the allowed entrypoints to use for the dashboard ingress route, (e.g. traefik, web, websecure).
-    # By default, it's using traefik entrypoint, which is not exposed.
-    # /!\ Do not expose your dashboard without any protection over the internet /!\
-    #entryPoints: ["traefik"]
-    #! Somehow the "traefik" entrypoint has problems which are not understood
-    entryPoints: ["websecure"]
-    tls:
-      #! Get TLS cert through resolver
-      certResolver: letsencrypt-dns
+  #! This has been removed because it contains host-specifics. Using kustomize instead, see traefik-ingressroute.yaml
+  #dashboard:
+  #  enabled: true
+  #  # -- The router match rule used for the dashboard ingressRoute
+  #  #matchRule: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+  #  #! Expose API via Host, not path, because path-matching might be ambiguous
+  #  matchRule: Host(`traefik.l5ug.nom.cx`)
+  #  # -- Specify the allowed entrypoints to use for the dashboard ingress route, (e.g. traefik, web, websecure).
+  #  # By default, it's using traefik entrypoint, which is not exposed.
+  #  # /!\ Do not expose your dashboard without any protection over the internet /!\
+  #  #entryPoints: ["traefik"]
+  #  #! Somehow the "traefik" entrypoint has problems which are not understood
+  #  entryPoints: ["websecure"]
+  #  tls:
+  #    #! Get TLS cert through resolver
+  #    certResolver: letsencrypt-dns
   healthcheck:
     # -- Create an IngressRoute for the healthcheck probe
     enabled: true
