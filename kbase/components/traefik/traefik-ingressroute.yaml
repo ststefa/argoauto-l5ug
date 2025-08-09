@@ -11,10 +11,10 @@ metadata:
 spec:
   entryPoints:
   - websecure
-#! I use an invalid default to force kustomization in clusters
+#! Use an invalid default to force kustomization in clusters
 #  routes:
 #  - kind: Rule
-#    match: Host(`traefik.l5ug.nom.cx`)
+#    match: Host(`HasToBeSpecifiedInCluster`)
 #    services:
 #    - kind: TraefikService
 #      name: api@internal
