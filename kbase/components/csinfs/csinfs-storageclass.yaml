@@ -1,12 +1,30 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs
+  name: nfs-slow
 provisioner: nfs.csi.k8s.io
 parameters:
   server: blubox.heldenzeit.net
   share: /data/nfs
-  #! subDir should be unique for any cluster
+  #! subDir should be unique for any cluster, kustomize there
+  subDir: notset
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions:
+  - nfsvers=4.1
+  - hard
+  - timeo=600
+  - retrans=2
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-fast
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: blubox.heldenzeit.net
+  share: /nfs
+  #! subDir should be unique for any cluster, kustomize there
   subDir: notset
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
