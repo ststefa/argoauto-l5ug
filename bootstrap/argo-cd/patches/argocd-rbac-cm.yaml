@@ -11,20 +11,19 @@ data:
     ## argo_editor
     ### Regular "readonly" perms
     p, role:argo_editor, applications, get, */*, allow
-    p, role:argo_editor, applications, list, */*, allow
-    p, role:argo_editor, projects, get, */*, allow
-    p, role:argo_editor, projects, list, */*, allow
-    p, role:argo_editor, repositories, get, */*, allow
-    p, role:argo_editor, repositories, list, */*, allow
-    p, role:argo_editor, clusters, get, */*, allow
-    p, role:argo_editor, clusters, list, */*, allow
-    p, role:argo_editor, certificates, get, */*, allow
-    p, role:argo_editor, certificates, list, */*, allow
-    p, role:argo_editor, accounts, get, */*, allow
-    p, role:argo_editor, accounts, list, */*, allow
+    p, role:argo_editor, certificates, get, *, allow
+    p, role:argo_editor, clusters, get, *, allow
+    p, role:argo_editor, repositories, get, *, allow
+    p, role:argo_editor, projects, get, *, allow
+    p, role:argo_editor, accounts, get, *, allow
+    p, role:argo_editor, gpgkeys, get, *, allow
     ### And additionally
+    #### sync apps
     p, role:argo_editor, applications, sync, */*, allow
-    p, role:argo_editor, pods, delete, */*, allow
+    #### delete pods (https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#fine-grained-permissions-for-updatedelete-action)
+    p, role:argo_editor, applications, delete/*/Pod/*/*, */*, allow
+    #### get logs
+    p, role:argo_editor, logs, get, */*, allow
     # Map users
     g, "k8s_admin", role:admin
     g, "k8s_editor", role:argo_editor
