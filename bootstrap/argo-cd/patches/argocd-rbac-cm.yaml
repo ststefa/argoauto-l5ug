@@ -7,8 +7,27 @@ metadata:
   name: argocd-rbac-cm
 data:
   policy.csv: |
+    # Self-defined argo roles
+    ## argo_editor
+    ### Regular "readonly" perms
+    p, role:argo_editor, applications, get, */*, allow
+    p, role:argo_editor, applications, list, */*, allow
+    p, role:argo_editor, projects, get, */*, allow
+    p, role:argo_editor, projects, list, */*, allow
+    p, role:argo_editor, repositories, get, */*, allow
+    p, role:argo_editor, repositories, list, */*, allow
+    p, role:argo_editor, clusters, get, */*, allow
+    p, role:argo_editor, clusters, list, */*, allow
+    p, role:argo_editor, certificates, get, */*, allow
+    p, role:argo_editor, certificates, list, */*, allow
+    p, role:argo_editor, accounts, get, */*, allow
+    p, role:argo_editor, accounts, list, */*, allow
+    ### And additionally
+    p, role:argo_editor, applications, sync, */*, allow
+    p, role:argo_editor, pods, delete, */*, allow
+    # Map users
     g, "k8s_admin", role:admin
-    g, "k8s_editor", role:readonly
+    g, "k8s_editor", role:argo_editor
     g, "k8s_viewer", role:readonly
   #policy.default: role:readonly
   scopes: '[groups, username]'
