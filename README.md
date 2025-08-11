@@ -2,6 +2,7 @@
 
 This config controls the argocd app on the l5ug cluster. ArgoCD in turn controls itself and the k8s installation(s).
 
+To enable standardization across clusters, the "KBase" concept is used, see README there.
 
 ## Managing Other Clusters
 
