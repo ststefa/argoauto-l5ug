@@ -1,19 +1,40 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-#! Legacy non-helm approach
-#resources:
-#  - sealed-secrets-operator.yaml
-
 helmCharts:
   - name: sealed-secrets
     includeCRDs: true
     # see here for version: https://bitnami-labs.github.io/sealed-secrets/index.yaml
     version: 2.17.3
     repo: https://bitnami-labs.github.io/sealed-secrets
-    releaseName: sealed-secrets-controller
+    releaseName: sealed-secrets
     namespace: kube-system
-    #valuesFile: sealed-secrets-values.yaml
+    valuesFile: sealed-secrets-values.yaml
+
+generators:
+  - |
+    apiVersion: viaduct.ai/v1
+    kind: ksops
+    metadata:
+      name: example-secret-generator
+      annotations:
+        config.kubernetes.io/function: |
+            exec:
+              # ksops must be reachable by $PATH
+              path: ksops
+    files:
+    - sealed-secrets-bootstrap-key-sec.sops.yaml
 
 resources:
-  - secrets-creator-cr.yaml
+  #! A ClusterRole to allow creation of SealedSecrets
+  - sealed-secrets-creator-cr.yaml
+
+patches:
+#! The chart generates the name "sealed-secrets", but kubeseal's default is "sealed-secrets-controller" in the kube-system namespace. Rename it to the default to avoid having to specify additional args on every kubeseal invocation
+- target:
+    kind: Deployment
+    name: sealed-secrets
+  patch: |-
+    - op: replace
+      path: /metadata/name
+      value: sealed-secrets-controller
