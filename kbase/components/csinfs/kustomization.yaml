@@ -7,6 +7,7 @@ namespace: csinfs
 helmCharts:
   - name: csi-driver-nfs
     includeCRDs: true
+    # see here for version: https://github.com/kubernetes-csi/csi-driver-nfs/releases
     version: 4.11.0
     repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
     #! Using all defaults. Do modifications using kustomize

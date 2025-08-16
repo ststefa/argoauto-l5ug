@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
-  - node-reader.yaml
-  - crd-reader.yaml
+  - crd-reader-cr.yaml
+  - node-reader-cr.yaml
   - oidc-crb.yaml

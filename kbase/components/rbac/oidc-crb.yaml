@@ -37,11 +37,11 @@ roleRef:
   kind: ClusterRole
   name: view
 ---
-# Show nodes, see `node-reader.yaml`
+# Show nodes, see `node-reader-cr.yaml`
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: node-reader-all
+  name: node-reader
 subjects:
   - kind: Group
     apiGroup: rbac.authorization.k8s.io
@@ -57,11 +57,11 @@ roleRef:
   kind: ClusterRole
   name: node-reader
 ---
-# Show CRDs, see `crd-reader.yaml`
+# Show CRDs, see `crd-reader-cr.yaml`
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: crd-reader-all
+  name: crd-reader
 subjects:
   - kind: Group
     apiGroup: rbac.authorization.k8s.io
@@ -76,3 +76,20 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: crd-reader
+---
+# Create SealedSecrets, see `components/sealedsecrets/secrets-creator-cr.yaml`
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: secrets-creator
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: k8s_admin
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: k8s_editor
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: secrets-creator

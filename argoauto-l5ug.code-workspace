@@ -4,5 +4,13 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cSpell.words": [
+			"armhf",
+			"Bitnami",
+			"crds",
+			"dashapp",
+			"kbase"
+		]
+	}
 }
