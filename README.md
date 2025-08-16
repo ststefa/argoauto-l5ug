@@ -1,6 +1,6 @@
 # ArgoCD-Autopilot gitops for heldenzeit
 
-This config controls the argocd app on the l5ug cluster. ArgoCD in turn controls itself and the k8s installation(s).
+This config controls the argocd app on the l5ug cluster. ArgoCD in turn controls itself and all connected k8s clusters.
 
 To enable standardization across clusters, the "KBase" concept is used, see README there.
 

@@ -1,4 +1,4 @@
-#! Instead of using the helm values (which cannot be made host-specific), I define the IngressRoute manually so it can be kustomized
+#! Instead of using the helm values (which cannot be made host-specific), define the IngressRoute manually so it can be kustomized
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:

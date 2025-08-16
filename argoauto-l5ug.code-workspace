@@ -10,7 +10,8 @@
 			"Bitnami",
 			"crds",
 			"dashapp",
-			"kbase"
+			"kbase",
+			"kustomized"
 		]
 	}
 }
