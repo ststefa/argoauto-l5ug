@@ -23,6 +23,7 @@ generators:
               # ksops must be reachable by $PATH
               path: ksops
     files:
+    #! A constant encryption key. Together with disabling rotation this allows multi-cluster secrets (i.e., secrets which are valid on multiple clusters)
     - sealed-secrets-bootstrap-key-sec.sops.yaml
 
 resources:

@@ -48,8 +48,46 @@ If managing multiple clusters with one argocd then all clusters need the same in
 
 Rivals with ksops.
 
-The ksops approach in contrast is transparent, i.e. Secrets are sops-encrypted by the developer and decrypted on the fly by kustomize. The challenge is to enable argocd to authenticate to Vault to be able to do this with transit engine. Otherwise age keys would have to be used. ArgoCd would need his own age key which is a problem to inject into kubernetes in a gitopsy way.
+#### Creating SealedSecrets
 
+1. Create a json/yaml-encoded Secret somehow (note use of `--dry-run` - this is just a local file!):
+
+    ```sh
+    echo -n bar | kubectl create -n foo secret generic mysecret --dry-run=client --from-file=foo=/dev/stdin -o json > mysecret.json
+    ```
+
+1. Encrypt it
+
+    ```sh
+    kubeseal -f mysecret.json -w mysealedsecret.json
+    ```
+
+    At this point mysealedsecret.json is encrypted
+
+1. Apply the SealedSecret
+
+    ```sh
+    kubectl create -f mysealedsecret.json
+    ```
+
+    The operator will swiftly create an unsealed standard Secret
+
+1. Verify
+
+    ```sh
+    kubectl get -n foo secret mysecret -o yaml
+    ```
+
+#### Removing SealedSecrets
+
+Remove the SealedSecret. The operator will then remove the plain secret
+
+```sh
+$ kubectl delete -n foo sealedsecrets.bitnami.com mysecret
+sealedsecret.bitnami.com "mysecret" deleted
+$ kubectl get -n foo secret mysecret -o yaml
+Error from server (NotFound): secrets "mysecret" not found
+```
 
 ### traefik
 
