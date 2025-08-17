@@ -11,10 +11,11 @@ data:
     ## argo_editor
     ### Regular "readonly" perms
     p, role:argo_editor, applications, get, */*, allow
+    p, role:argo_editor, applicationsets, get, */*, allow
     p, role:argo_editor, certificates, get, *, allow
     p, role:argo_editor, clusters, get, *, allow
-    p, role:argo_editor, repositories, get, *, allow
     p, role:argo_editor, projects, get, *, allow
+    p, role:argo_editor, repositories, get, *, allow
     p, role:argo_editor, accounts, get, *, allow
     p, role:argo_editor, gpgkeys, get, *, allow
     ### And additionally
@@ -25,6 +26,8 @@ data:
     p, role:argo_editor, applications, delete/*/*/*/*, */*, allow
     #### get logs
     p, role:argo_editor, logs, get, */*, allow
+    #### get logs
+    p, role:argo_editor, exec, create, */*, allow
     # Map users
     g, "k8s_admin", role:admin
     g, "k8s_editor", role:argo_editor
