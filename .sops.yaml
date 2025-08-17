@@ -13,6 +13,10 @@ creation_rules:
     encrypted_regex: oidc.clientSecret
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+  - path_regex: kbase/components/sealedsecrets/sealed-secrets-bootstrap-key-sec.sops.yaml
+    encrypted_regex: tls.key
+    input_type: yaml
+    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
   - path_regex: kbase/traefik/tls-secret.sops.yaml
     encrypted_regex: tls.key
     input_type: yaml
