@@ -32,7 +32,7 @@ resources:
 patches:
 #! The chart generates the name "sealed-secrets", but kubeseal's default is "sealed-secrets-controller" in the kube-system namespace. Rename it to the default to avoid having to specify additional args on every kubeseal invocation
 - target:
-    kind: Deployment
+    kind: Service
     name: sealed-secrets
   patch: |-
     - op: replace
