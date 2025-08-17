@@ -9,11 +9,11 @@ metadata:
 spec:
   template:
     spec:
-      # 1. Define an emptyDir volume which will hold the custom binaries
+      #! 1. Define an emptyDir volume which will hold the custom binaries
       volumes:
         - name: custom-tools
           emptyDir: {}
-      # 2. Use an init container to download/copy custom binaries into the emptyDir
+      #! 2. Use an init container to download/copy custom binaries into the emptyDir
       initContainers:
         - name: install-ksops
           image: viaductoss/ksops:v4.3.3
@@ -41,7 +41,7 @@ spec:
         #  volumeMounts:
         #    - name: custom-tools
         #      mountPath: /custom-tools
-      # 3. Volume mount the custom binary to the bin directory (overriding the existing version)
+      #! 3. Volume mount the custom binary to the bin directory (overriding the existing version)
       containers:
         - name: argocd-repo-server
           volumeMounts:
