@@ -31,7 +31,7 @@ spec:
               mountPath: /custom-tools
         #! Does not work, libs missing. Find static version if desired.
         #- name: install-curl
-        #  image: curlimages/curl:8.13.0
+        #  image: curlimages/curl:8.16.0
         #  command: ["/bin/sh", "-c"]
         #  args:
         #    - set -x;

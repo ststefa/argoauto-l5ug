@@ -9,7 +9,7 @@ spec:
         #! Generate initial vault token. This has to happen in an initContainer because the file has to be present at the time it is mounted by the argocd-repo-server container. If the file is not present at that moment, then /custom-tools/.vault-token irreversibly becomes a directory, breaking the whole process!
         #! The initContainer is a friend because it prevents the old ReplicaSet from being discarded if something fails with vault. This is a safety net!
         - name: vault-token-init
-          image: hashicorp/vault:1.15
+          image: hashicorp/vault:1.20.4
           command:
             - sh
             - -c
