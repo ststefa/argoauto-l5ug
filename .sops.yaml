@@ -6,7 +6,7 @@ creation_rules:
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
   - path_regex: bootstrap/argo-cd/argocd-repo-creds.sops.yaml
-    encrypted_regex: sshPrivateKey
+    encrypted_regex: (sshPrivateKey|password)
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
   - path_regex: bootstrap/argo-cd/argocd-sso.sops.yaml
