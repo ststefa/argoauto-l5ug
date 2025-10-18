@@ -6,6 +6,8 @@ To enable standardization across clusters, the "KBase" concept is used, see READ
 
 ## Using ksops and vault
 
+Also see <obsidian://adv-uri?vault=notes&uid=688d6704-e35e-4acb-b24b-b807495afee9&filepath=Enable%20ksops%20over%20vault.md>
+
 Secrets have to be encrypted. This is a challenge in a gitops approach because everything should be stored in git. Argo needs to be able to decrypt the secrets in order to operate.
 
 Encryption if often handled with sops. It has a pluggable backend architecture. Most often, age keys are used as a backend. Each developer has its own key, which must be added to the list of keys allowed to decrypt a secret.

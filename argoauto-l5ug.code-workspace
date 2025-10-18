@@ -11,6 +11,7 @@
 			"crds",
 			"dashapp",
 			"kbase",
+			"kubeseal",
 			"kustomized"
 		]
 	}
