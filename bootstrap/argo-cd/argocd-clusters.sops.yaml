@@ -42,6 +42,11 @@ sops:
           key_name: sops
           created_at: "2025-08-08T14:40:04Z"
           enc: vault:v1:Kd2dCPbVmdPmObk2pfX0Pndtof/NRkvxpKiA3vFrpi05+etRKqlcXl3UTtXpqGnFJw6HNgNzDxbwZZsm
+        - vault_address: https://bao.heldenzeit.net
+          engine_path: transit
+          key_name: sops
+          created_at: "2026-04-13T14:45:42Z"
+          enc: vault:v1:tSX4JXGBLPoR7X8LGqxTp5JetLbJLmcKnKzkL7P5wcNhDRSabhWvV89xX1GmiLI7Pli5Qu3Bmk0vmlLw
     lastmodified: "2025-08-09T13:19:23Z"
     mac: ENC[AES256_GCM,data:Npjdt64gPvqx7hK+OdTYaXAERPYmMgOKJG9BImbUAugcp8b84byV+5IDQEcv7pszoaUiEZPVdOKT+Ibc2z7LqUwLbHdVgbfwWxXmYtw7FfWm2JgKK2h4orn6ijpoVOsbf2a995Y5jVj6Nz39WqF14REoeKZ4TrEyMHuCAM3Dbhs=,iv:HXeYEpB8ksxY+jZnKa0z7yAnjEKz8najxIa3rUbvPWc=,tag:TbRbGoFQAWRKQSDD8lrHFg==,type:str]
     encrypted_regex: config
