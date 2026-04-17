@@ -1,4 +1,4 @@
-#! Infix ".sops" into files that have secrets, e.g. "file.info.txt" becomes  "file.info.sops.txt"
+#! Infix ".sops" into files that have secrets, e.g. "file.info.txt" becomes "file.info.sops.txt"
 #! Specify precisely and minimalastically what to encrypt, i.e. do *not* encrypt what is not a secret!
 creation_rules:
   - path_regex: bootstrap/argo-cd/argocd-clusters.sops.yaml
@@ -17,11 +17,11 @@ creation_rules:
     encrypted_regex: tls.key
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
-  - path_regex: kbase/traefik/tls-secret.sops.yaml
+  - path_regex: kbase/traefik/traefik-secret-tls.sops.sops.yaml
     encrypted_regex: tls.key
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
-  - path_regex: kbase/traefik/traefik-namecheap-token.sops.yaml
+  - path_regex: kbase/traefik/traefik-secret-namecheap.sops.sops.yaml
     encrypted_regex: api-token
     input_type: yaml
     hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
