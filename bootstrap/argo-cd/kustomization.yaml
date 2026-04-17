@@ -57,6 +57,11 @@ patches:
 - path: patches/argocd-dep-sa.yaml
 #! Enable vault access in argocd-repo-server
 - path: patches/argocd-dep-vault.yaml
+#! Keep fewer old ReplicaSets for all Argo CD Deployments during self-updates
+- path: patches/argocd-dep-revision-history.yaml
+  target:
+    labelSelector: app.kubernetes.io/part-of=argocd
+    kind: Deployment
 #! Groups and policies
 - path: patches/argocd-rbac-cm.yaml
 #! Trusted certs for remote repos and clusters
