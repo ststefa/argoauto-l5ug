@@ -4,27 +4,27 @@ creation_rules:
   - path_regex: bootstrap/argo-cd/argocd-clusters.sops.yaml
     encrypted_regex: config
     input_type: yaml
-    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+    hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
   - path_regex: bootstrap/argo-cd/argocd-repo-creds.sops.yaml
     encrypted_regex: (sshPrivateKey|password)
     input_type: yaml
-    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+    hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
   - path_regex: bootstrap/argo-cd/argocd-sso.sops.yaml
     encrypted_regex: oidc.clientSecret
     input_type: yaml
-    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+    hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
   - path_regex: kbase/components/sealedsecrets/sealed-secrets-bootstrap-key-sec.sops.yaml
     encrypted_regex: tls.key
     input_type: yaml
-    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+    hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
   - path_regex: kbase/traefik/traefik-secret-tls.sops.sops.yaml
     encrypted_regex: tls.key
     input_type: yaml
-    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+    hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
   - path_regex: kbase/traefik/traefik-secret-namecheap.sops.sops.yaml
     encrypted_regex: api-token
     input_type: yaml
-    hc_vault_transit_uri: https://vault.heldenzeit.net/v1/transit/keys/sops
+    hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
   #! An invalid safety net rule to catch unencrypted secrets.
   #! Make sure to not encrypt non-sensitive values as every encrypted value
   #! makes things harder to understand.

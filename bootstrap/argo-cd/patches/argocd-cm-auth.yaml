@@ -9,8 +9,8 @@ data:
   #accounts.testuser: login # to check non-admin capabilities
   #
   oidc.config: |
-    name: Vault
-    issuer: https://vault.heldenzeit.net/v1/identity/oidc/provider/k8s
+    name: OpenBao
+    issuer: https://bao.heldenzeit.net/v1/identity/oidc/provider/k8s
     clientID: tH3jslDrwkndgiqzeGzovWkgcbfdeyPu
     clientSecret: $argocd-sso:oidc.clientSecret
     requestedIDTokenClaims:
