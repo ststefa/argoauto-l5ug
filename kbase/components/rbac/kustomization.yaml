@@ -6,4 +6,5 @@ namespace: kube-system
 resources:
   - crd-reader-cr.yaml
   - node-reader-cr.yaml
+  - storage-cr.yaml
   - oidc-crb.yaml

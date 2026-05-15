@@ -77,6 +77,26 @@ roleRef:
   kind: ClusterRole
   name: crd-reader
 ---
+# Show storages, see `storage-cr.yaml`
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: storage-reader
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: k8s_admin
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: k8s_editor
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: k8s_viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: crd-reader
+---
 # Work with SealedSecrets, see `components/sealedsecrets/sealed-secrets-creator-cr.yaml`
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
