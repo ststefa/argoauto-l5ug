@@ -95,7 +95,7 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: crd-reader
+  name: storage-reader
 ---
 # Work with SealedSecrets, see `components/sealedsecrets/sealed-secrets-creator-cr.yaml`
 apiVersion: rbac.authorization.k8s.io/v1
