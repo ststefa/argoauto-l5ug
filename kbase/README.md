@@ -38,6 +38,8 @@ Has a problematic list of dependencies, see <https://github.com/kubernetes/dashb
 
 A standard set of permissions that serves as my baseline and should be applied to any cluster. Maps OIDC roles
 
+To allow for finegrained adjustments, API groups have their own files. oidc-crb.yaml assigns them to OIDC roles.
+
 ### sealedsecrets
 
 The Bitnami SealedSecrets operator (<https://github.com/bitnami-labs/sealed-secrets>) adds the ability to create encrypted SealedSecrets. These will in turn create decrypted secrets with the same name in the same namespace. The mechanism relies on a cluster-wide shared secret that is created upon installation.
