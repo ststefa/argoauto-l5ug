@@ -1,3 +1,4 @@
+#! Map the various CRs to OIDC roles
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -49,9 +50,6 @@ subjects:
   - kind: Group
     apiGroup: rbac.authorization.k8s.io
     name: k8s_editor
-  - kind: Group
-    apiGroup: rbac.authorization.k8s.io
-    name: k8s_viewer
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -77,11 +75,11 @@ roleRef:
   kind: ClusterRole
   name: crd-reader
 ---
-# Show storages, see `storage-cr.yaml`
+# Collection of useful perms, see `power-readonly-cr.yaml`
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: storage-reader
+  name: power-readonly
 subjects:
   - kind: Group
     apiGroup: rbac.authorization.k8s.io
@@ -95,7 +93,7 @@ subjects:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: storage-reader
+  name: power-readonly
 ---
 # Work with SealedSecrets, see `components/sealedsecrets/sealed-secrets-creator-cr.yaml`
 apiVersion: rbac.authorization.k8s.io/v1
