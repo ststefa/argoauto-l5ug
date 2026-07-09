@@ -4,9 +4,9 @@ kind: Kustomization
 helmCharts:
   - name: sealed-secrets
     includeCRDs: true
-    # see here for version: https://bitnami-labs.github.io/sealed-secrets/index.yaml
-    version: 2.18.5
-    repo: https://bitnami-labs.github.io/sealed-secrets
+    # see here for version: https://bitnami.github.io/sealed-secrets/index.yaml
+    version: 2.19.1
+    repo: https://bitnami.github.io/sealed-secrets
     releaseName: sealed-secrets
     namespace: kube-system
     valuesFile: sealed-secrets-values.yaml
