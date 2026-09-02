@@ -31,20 +31,18 @@ ingressRoute:
     tls: {}
 
 #! https://doc.traefik.io/traefik/observability/logs/
-logs:
-  general:
-    level: INFO
-    noColor: true
-  access:
-    enabled: true
-    filters:
-      # -- Set statusCodes, to limit the access logs to requests with a status codes in the specified range
-      statuscodes: "400-499,500-599"
-      # -- Set retryAttempts, to keep the access logs when at least one retry has happened
-      retryattempts: false
-      # -- Set minDuration, to keep access logs when requests take longer than the specified duration
-      minduration: "1s"
-
+log:
+  level: INFO
+  noColor: true
+accessLog:
+  enabled: true
+  filters:
+    # -- Set statusCodes, to limit the access logs to requests with a status codes in the specified range
+    statusCodes: "400-499,500-599"
+    # -- Set retryAttempts, to keep the access logs when at least one retry has happened
+    retryAttempts: true
+    # -- Set minDuration, to keep access logs when requests take longer than the specified duration
+    minDuration: "1s"
 
 #! Obsoleted by certificatesResolvers (below)
 #additionalArguments:
