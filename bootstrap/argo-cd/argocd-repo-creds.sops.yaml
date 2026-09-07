@@ -1,0 +1,50 @@
+#! See https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#repository-credentials
+#! The corresponding pubkey must be added as a "Deploy key" to the repo that is accessed.
+apiVersion: v1
+kind: Secret
+metadata:
+    name: ststefa-creds
+    labels:
+        argocd.argoproj.io/secret-type: repo-creds
+type: Opaque
+stringData:
+    type: git
+    url: git@github.com:ststefa
+    sshPrivateKey: ENC[AES256_GCM,data:et9SlEv4V2Sv2mgZ8bJBNDuJ4cRbmIp38b9PajBk9Xh3omfXqk1CS/DAhYuJWcLKq1AraT4A3QTfsq2hKgxa7bhVBE+psiJuFUSJIn6eH4BrrDYEq38kEhOXk8OTQCGnfK/7yvIMD+FpEx8ARtUgwinTPPQmxM5iOgeB+ipAo9s44Z29VeuOG9z2SczrTz9NeIc0wPeNQII7nHK/ODRP1I/72doIg/xAgHTahwUWgpm4vyMz1/HLUUtqUOTBgH7sned531nByJHsWZsc2xaFC936WYxlf2788M8XrsMPw2ry2WP4PdCfgxxjnO2gIUPMDYxJWnqnydLjhma7j3WfS9SnBKhCIvas/4BlfT3e5nD6Uta9o172BhzGne50ijt0Q8tH3pcpEZcRPhieW8ySP4nwvsZoc0a5H+7T7qBzrBbFyUrA2UJNlF+UIZXpN+NHXgP4mvyY/XjMRH4faZgOG/xHiMrV8krj8wbg9K1q+/MqsLyZetexg295WlRY8qwbYL0g3/VBwo7bzThCEX1TW4mtvqupk24lG/1n,iv:Mqy7pY5ULt7SNV0W3XO+GhYT+AVpcinpENZPfvieL+8=,tag:xbIb7Y452LgRm46JmkM40A==,type:str]
+sops:
+    encrypted_regex: (sshPrivateKey|password)
+    hc_vault:
+        - created_at: "2026-04-13T14:45:42Z"
+          enc: vault:v1:0N+qMFxcV8J8JQW6qg9jXPtk8xudQbHDQ5fdV4vCdFkI83iee/2nwj4qi+E7W3MLiAdQGixj59xmsTSr
+          engine_path: transit
+          key_name: sops
+          vault_address: https://bao.heldenzeit.net
+    lastmodified: "2026-05-13T21:00:40Z"
+    mac: ENC[AES256_GCM,data:wrS1KV7a3aZEDqm3u8bXRm08/KlQrIBvs0p58RmpSfJBADM66AkzDtM+xDMqs2WOWSaMBYWc78afP54/Jsn6xcfT0bGxq5q5eYTmm+GB6t195tdqfMPs/8CLi5kUAtKajJU2gbjXxLXvwKUGhQZ3NaWvNIPUsfNop4DtOANjgdY=,iv:9HlDZfnVF9koiC70jpAjRi+alGTVpBt6utnoCK3kBwo=,tag:IF3WwRAshRGt7rj7kTF0Wg==,type:str]
+    version: 3.13.0
+---
+#! http authn using pat "argocd2025-10". This is redundant to the ssh creds but required because of the argocd-autopilot bootstrap process. TODO: Maybe that can be somehow done over ssh?
+apiVersion: v1
+kind: Secret
+metadata:
+    name: argo-l5ug
+    labels:
+        argocd.argoproj.io/secret-type: repository
+type: Opaque
+stringData:
+    name: argo-l5ug
+    password: ENC[AES256_GCM,data:CYgyzjgdQaY4VuyuiHT4C3DFrbAU//sU95W091qPUiOONjoNW6LO70SoINZ2rMhP2ivmy642Pmyi1/+eWVE6Arz3ygsd1mxIRv/OkUy5/miimArCJSO+lSKHuswJ,iv:NU2+jlDfkcKu4eqqH9qyq98+hhOH+bQcEr+aL4tnf5A=,tag:mPahIiDT2GgRntcXFloQUg==,type:str]
+    type: git
+    url: https://github.com/ststefa/argoauto-l5ug.git
+    username: any
+sops:
+    encrypted_regex: (sshPrivateKey|password)
+    hc_vault:
+        - created_at: "2026-04-13T14:45:42Z"
+          enc: vault:v1:0N+qMFxcV8J8JQW6qg9jXPtk8xudQbHDQ5fdV4vCdFkI83iee/2nwj4qi+E7W3MLiAdQGixj59xmsTSr
+          engine_path: transit
+          key_name: sops
+          vault_address: https://bao.heldenzeit.net
+    lastmodified: "2026-05-13T21:00:40Z"
+    mac: ENC[AES256_GCM,data:wrS1KV7a3aZEDqm3u8bXRm08/KlQrIBvs0p58RmpSfJBADM66AkzDtM+xDMqs2WOWSaMBYWc78afP54/Jsn6xcfT0bGxq5q5eYTmm+GB6t195tdqfMPs/8CLi5kUAtKajJU2gbjXxLXvwKUGhQZ3NaWvNIPUsfNop4DtOANjgdY=,iv:9HlDZfnVF9koiC70jpAjRi+alGTVpBt6utnoCK3kBwo=,tag:IF3WwRAshRGt7rj7kTF0Wg==,type:str]
+    version: 3.13.0
