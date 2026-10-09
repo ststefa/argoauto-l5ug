@@ -1,0 +1,18 @@
+# see https://json.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+#! Do not force a namespace because cert-manager objects are created in different ns's
+#namespace: cert-manager
+
+helmCharts:
+  - name: cert-manager
+    # see here for version: https://artifacthub.io/packages/helm/cert-manager/cert-manager
+    version: v1.19.4
+    repo: oci://quay.io/jetstack/charts
+    #! Using all defaults. Do modifications using kustomize
+    valuesFile: cert-manager-values.yaml
+    namespace: cert-manager
+
+resources:
+- cert-manager-ns.yaml
