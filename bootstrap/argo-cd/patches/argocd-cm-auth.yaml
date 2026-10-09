@@ -8,11 +8,13 @@ data:
   #! Users defined inside argocd, maybe useful for quick adhoc users
   #accounts.testuser: login # to check non-admin capabilities
   #
+  #! A separate clientSecret is required because it requires authorization_code=true in the OpenBao OIDC application. The regular k8s app does not have that. Argo uses a different auth flow than kubectl.
   oidc.config: |
     name: OpenBao
     issuer: https://bao.heldenzeit.net/v1/identity/oidc/provider/k8s
     clientID: tH3jslDrwkndgiqzeGzovWkgcbfdeyPu
     clientSecret: $argocd-sso:oidc.clientSecret
+    cliClientID: 7vFA7yqp7PEY5x2yXgcQO2eqLAI8sDZE
     requestedIDTokenClaims:
        groups:
           essential: true
