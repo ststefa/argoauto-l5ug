@@ -36,3 +36,96 @@ Secrets can then be encrypted by a developer using a vault transit secret. Argo 
 See "Managing Other Clusters" in [Obsidian:ArgoCD notes](obsidian://adv-uri?vault=notes&uid=4f30bf66-bcbc-440e-89e3-0c96999beb21&filepath=ArgoCD%20notes.md)
 
 (If the link does not work, go there manually)
+
+## ArgoCD CLI Login With OpenBao OIDC
+
+ArgoCD uses OpenBao as its OIDC provider. The web UI and the ArgoCD CLI use different OIDC clients:
+
+- The web UI uses the confidential client configured as `clientID` and `clientSecret` in `bootstrap/argo-cd/patches/argocd-cm-auth.yaml`.
+- The CLI uses a separate public client configured as `cliClientID` in the same file.
+
+This split is required because the CLI performs a local PKCE authorization-code flow and cannot authenticate with the confidential web client secret.
+
+Create the CLI client in OpenBao with the CLI, not only through the web UI. The `authorization_code` setting is easy to miss in the UI, but the ArgoCD CLI SSO flow requires it:
+
+```sh
+bao write identity/oidc/client/argocd-cli \
+  client_type=public \
+  authorization_code=true \
+  assignments=k8s \
+  redirect_uris='http://localhost:8085/auth/callback'
+```
+
+Then get the generated client ID:
+
+```sh
+bao read -field=client_id identity/oidc/client/argocd-cli
+```
+
+Add that value to `bootstrap/argo-cd/patches/argocd-cm-auth.yaml` as
+`cliClientID`.
+
+The ArgoCD config should look like this:
+
+```yaml
+oidc.config: |
+  name: OpenBao
+  issuer: https://bao.heldenzeit.net/v1/identity/oidc/provider/k8s
+  clientID: tH3jslDrwkndgiqzeGzovWkgcbfdeyPu
+  clientSecret: $argocd-sso:oidc.clientSecret
+  cliClientID: 7vFA7yqp7PEY5x2yXgcQO2eqLAI8sDZE
+  requestedIDTokenClaims:
+     groups:
+        essential: true
+  requestedScopes:
+     - openid
+     - k8s
+     - groups
+```
+
+The OpenBao provider must allow both client IDs because this setup uses one
+provider for both the existing k8s client and the new argocd-cli client:
+
+```sh
+bao read identity/oidc/provider/k8s
+```
+
+Expected:
+
+```text
+allowed_client_ids    [7vFA7yqp7PEY5x2yXgcQO2eqLAI8sDZE tH3jslDrwkndgiqzeGzovWkgcbfdeyPu]
+```
+
+Alternatively use a separate provider if preferred.
+
+After changing ArgoCD OIDC config, restart the server so the new config is
+loaded:
+
+```sh
+kubectl -n argocd rollout restart deploy argocd-server
+kubectl -n argocd rollout status deploy argocd-server
+```
+
+Log in. The ArgoCD CLI uses `http://localhost:8085/auth/callback` by default,
+which is why that URI must be registered on the Bao CLI client:
+
+```sh
+argocd login argo.l5ug.nom.cx --grpc-web --sso
+argocd app list
+```
+
+If a different local callback port is needed, add the matching redirect URI to
+the Bao CLI client and pass it explicitly with `--sso-port`.
+
+Common failures:
+
+- `Redirect URI mismatch`: add the exact callback URI shown in the failed
+  request to the Bao client, for example
+  `http://localhost:8085/auth/callback`.
+- `client not allowed to perform authorization code credential flow`: set
+  `authorization_code=true` on the Bao client used by ArgoCD.
+- `invalid_client: client failed to authenticate`: the CLI is trying to use a
+  confidential client. Configure a public Bao client and set it as
+  `cliClientID`.
+- `unauthorized_client: client is not authorized to use the provider`: add the
+  CLI client ID to `identity/oidc/provider/k8s` `allowed_client_ids`.
