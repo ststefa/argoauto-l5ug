@@ -26,6 +26,10 @@ TODO: Resolver for namecheap missing (only poorly maintained out-of-band webhook
 
 A NFS driver (<https://github.com/kubernetes-csi/csi-driver-nfs>), hooked up to an internal NFS server
 
+Cluster overlays must set a unique `subDir` template for each StorageClass. The NFS CSI driver expands PVC/PV metadata in this field, so l5ug uses a flat pattern with the cluster name, PVC namespace, PVC name, and PV name. Avoid nested `subDir` layouts here: the driver only removes the final directory on PV deletion, which would leave parent directories behind.
+
+The StorageClasses also set `mountPermissions` so new PVC directories are writable by non-root workloads such as Traefik without manual `chown` on the NFS server.
+
 ### dashboard
 
 A k8s management dashboard (<https://github.com/kubernetes/dashboard>).

@@ -8,6 +8,8 @@ parameters:
   share: /data/nfs
   #! subDir should be unique for any cluster, kustomize there
   subDir: notset
+  #! Very open so it works with any user used by workloads
+  mountPermissions: "0777"
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
@@ -26,6 +28,8 @@ parameters:
   share: /nfs
   #! subDir should be unique for any cluster, kustomize there
   subDir: notset
+  #! Very open so it works with any user used by workloads
+  mountPermissions: "0777"
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
