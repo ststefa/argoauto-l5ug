@@ -3,3 +3,7 @@
 
 # Local kustomize builds will inflate helm charts
 charts
+
+# Experimental components. Do not commit!
+kbase/components/dashboard/
+apps/6wu4/kimai/
