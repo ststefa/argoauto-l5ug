@@ -69,6 +69,10 @@ ports:
 
 persistence:
   enabled: true
+  # Keep Traefik's ACME state on shared storage. Using the k3s default
+  # local-path storage binds the PVC to one node and can take ingress down
+  # when that node is NotReady.
+  storageClass: nfs-fast
   size: 1Mi
 
 deployment:
