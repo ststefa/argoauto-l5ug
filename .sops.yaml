@@ -25,6 +25,10 @@ creation_rules:
     encrypted_regex: api-token
     input_type: yaml
     hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
+  - path_regex: kbase/components/crtmgr-ncheap-issuer/namecheap-credentials.sops.yaml
+    encrypted_regex: (apiKey|apiUser)
+    input_type: yaml
+    hc_vault_transit_uri: https://bao.heldenzeit.net/v1/transit/keys/sops
   #! An invalid safety net rule to catch unencrypted secrets.
   #! Make sure to not encrypt non-sensitive values as every encrypted value
   #! makes things harder to understand.

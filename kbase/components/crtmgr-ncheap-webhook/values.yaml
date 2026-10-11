@@ -1,0 +1,17 @@
+groupName: acme.namecheap.com
+
+replicaCount: 1
+
+image:
+  repository: kelvie/cert-manager-webhook-namecheap
+  tag: latest
+  pullPolicy: IfNotPresent
+
+certManager:
+  namespace: cert-manager
+  serviceAccountName: cert-manager
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi

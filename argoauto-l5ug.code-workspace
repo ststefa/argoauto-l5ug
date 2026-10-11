@@ -12,7 +12,7 @@
 			"dashapp",
 			"kbase",
 			"kubeseal",
-			"kustomized"
+			"kustomized",
 		]
 	}
 }

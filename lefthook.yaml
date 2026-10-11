@@ -1,6 +1,0 @@
-# Use `lefthook install` to activate git hooks
-pre-commit:
-  parallel: true
-  commands:
-    sops-encryption-check:
-      run: just sops-check

@@ -3,6 +3,10 @@
 default:
   just --list
 
+# Install the repository's Prek-managed Git hooks.
+hooks-install:
+  prek install
+
 # Check whether all defined files are sops-encrypted
 sops-check:
   #!/usr/bin/env bash

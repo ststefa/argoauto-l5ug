@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: sops-check
+        name: Verify SOPS encryption
+        entry: just sops-check
+        language: system
+        pass_filenames: false
+        always_run: true
