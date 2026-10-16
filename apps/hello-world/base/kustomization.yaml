@@ -9,3 +9,4 @@ resources:
 - github.com/argoproj-labs/argocd-autopilot/examples/demo-app?ref=v0.4.17
 #! Add a traefik ingressroute
 - ingressroute.yaml
+- simple-certificate.yaml

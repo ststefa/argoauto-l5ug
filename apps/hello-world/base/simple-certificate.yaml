@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: simple-tls
+spec:
+  secretName: simple-tls
+  issuerRef:
+    name: letsencrypt-namecheap-production
+    kind: ClusterIssuer
+  dnsNames:
+    - simple.l5ug.nom.cx
