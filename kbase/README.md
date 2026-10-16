@@ -56,7 +56,7 @@ stringData:
   apiUser: ...
 ```
 
-Once a solver is available, the migration path away from Traefik-managed ACME is to create `Certificate` resources that write Kubernetes TLS Secrets and then change Traefik `IngressRoute` objects from `tls.certResolver` to `tls.secretName`.
+Each public `IngressRoute` uses a cert-manager `Certificate` in the same namespace. cert-manager writes its TLS Secret there and Traefik references it through `tls.secretName`; this frees Traefik from acting as ACME resolver amd eliminates ACME state PVC, or Namecheap credentials.
 
 ### csinfs
 
@@ -135,6 +135,4 @@ Error from server (NotFound): secrets "mysecret" not found
 
 The ingress handler. Especially in conjunction with k3s, make sure to disable the k3s default traefik and use this one. The disabling is managed by puppet.
 
-Traefik stores ACME state in a small PVC. Do not let that PVC use k3s `local-path` storage: a local-path PV is pinned to the node where it was created, which means Traefik cannot move to another node when the original node is NotReady. The component values request `nfs-fast` for this reason.
-
-If an existing cluster already has a `traefik/traefik` PVC on `local-path`, migrate it deliberately instead of relying on ArgoCD to patch the bound PVC in place. Back up `/data/acme.json`, scale Traefik down, recreate the PVC on `nfs-fast`, restore `acme.json`, then scale Traefik back up and verify that the `traefik` Service has endpoints.
+Public TLS certificates are managed by cert-manager. Traefik consumes their Kubernetes Secrets directly and has no persistent ACME state or dependency on ReadWriteMany storage like NFS.
