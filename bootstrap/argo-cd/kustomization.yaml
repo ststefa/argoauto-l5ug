@@ -33,6 +33,7 @@ resources:
 - argocd-repo-server-sa.yaml
 #! Traefik ingressroute for Web access
 - argocd-ingressroute.yaml
+- argocd-certificate.yaml
 
 patches:
 ##! Pin workloads and amd64. Argo only has images for amd64 and arm64
