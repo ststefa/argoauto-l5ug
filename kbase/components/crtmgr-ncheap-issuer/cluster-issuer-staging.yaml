@@ -20,3 +20,5 @@ spec:
               apiUserSecretRef:
                 name: namecheap-credentials
                 key: apiUser
+        # nom.cx uses split-horizon DNS: wait for public DNS propagation instead of checking the internal DNS view.
+        waitInsteadOfSelfCheck: 60s
