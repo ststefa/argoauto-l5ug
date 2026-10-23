@@ -5,7 +5,6 @@ metadata:
 data:
   config.yaml: |
     server:
-      port: 80
       sources:
         - name: NFS fast
           path: /srv/nfs-fast
