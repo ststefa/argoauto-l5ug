@@ -35,15 +35,24 @@ spec:
       containers:
         - name: filebrowser
           image: gtstef/filebrowser:beta-slim
+          env:
+            - name: FILEBROWSER_CONFIG
+              value: /config/config.yaml
           ports:
             - name: http
               containerPort: 80
           volumeMounts:
+            - name: config
+              mountPath: /config
+              readOnly: true
             - name: nfs-fast
               mountPath: /srv/nfs-fast
             - name: nfs-slow
               mountPath: /srv/nfs-slow
       volumes:
+        - name: config
+          configMap:
+            name: nfstest-filebrowser-config
         - name: nfs-fast
           persistentVolumeClaim:
             claimName: nfs-fast

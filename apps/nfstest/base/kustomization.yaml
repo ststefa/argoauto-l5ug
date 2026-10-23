@@ -5,6 +5,7 @@ namespace: nfstest
 
 resources:
   - namespace.yaml
+  - filebrowser-config.yaml
   - deployment.yaml
   - service.yaml
   - ingressroute.yaml

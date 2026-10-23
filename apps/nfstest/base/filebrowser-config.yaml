@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nfstest-filebrowser-config
+data:
+  config.yaml: |
+    server:
+      port: 80
+      sources:
+        - name: NFS fast
+          path: /srv/nfs-fast
+          config:
+            defaultEnabled: true
+        - name: NFS slow
+          path: /srv/nfs-slow
+    auth:
+      methods:
+        noauth: true
+        password:
+          enabled: false
+    frontend:
+      name: NFS Storage Test
