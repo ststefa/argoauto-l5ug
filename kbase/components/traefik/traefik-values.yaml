@@ -46,5 +46,9 @@ ports:
     #! Port 80 conflicts with host-level http (homebridge). I only use 443 for k3s
     exposedPort: 81
 
+#! Certificates are handled with cert-manager instead of by Traefik itself, so Traefik has no state to persist.
+#! Do not re-enable ACME persistence without an explicit storage design: k3s local-path binds the PVC to one node.
+#! If that node is unavailable, Traefik cannot be scheduled elsewhere and ingress becomes unreachable.
+#! NFS avoids node affinity but makes ingress depend on the NFS server; a restart or unavailable mount can stall Traefik.
 persistence:
   enabled: false
