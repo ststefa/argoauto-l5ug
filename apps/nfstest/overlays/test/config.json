@@ -1,0 +1,11 @@
+{
+  "appName": "nfstest",
+  "userGivenName": "nfstest",
+  "destNamespace": "nfstest",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": "apps/nfstest/overlays/test",
+  "srcRepoURL": "git@github.com:ststefa/argoauto-l5ug.git",
+  "srcTargetRevision": "",
+  "labels": null,
+  "annotations": null
+}
