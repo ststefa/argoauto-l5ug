@@ -18,6 +18,8 @@
 
 This repo controls the argocd app on the k8s cluster. ArgoCD in turn controls itself and all connected clusters. See `bootstrap/argo-cd` which is brought in by the application in `bootstrap/argo-cd.yaml`.
 
+By doing so, the setup is 100% declarative. I.e. there is nothing in the cluster that would be handled manually. That also makes the setup fully reproducible.
+
 To enable standardization across clusters, the "KBase" concept is used, see README there.
 
 The setup is mainly built around kustomize but also has some helm where this is the preferred distribution method of some tool. Kustomize and Helm can well work together. I consider it more composable to use Helm values as little as possible and do the configuration with kustomize. Your mileage may vary.
