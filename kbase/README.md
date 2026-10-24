@@ -2,7 +2,7 @@
 
 A collection of kubernetes tools that I consider useful for any cluster.
 
-To make it composable, kbase is split into `components` (acting as a "base") and `clusters` (referenced from the argo app).
+To make it composable, kbase is split into `components` (acting as a kustomize *base*) and `clusters` (referenced from the argo app).
 
 A cluster directory references zero or more components through kustomize. Any required per-cluster customization is done in the cluster directory.
 
@@ -10,23 +10,27 @@ Any component in kbase is a distinct component that should preferrably use its o
 
 The file `/projects/kbase.yaml` uses a git generator to create a new argo-application for any directory in `kbase/clusters/<cluster-name>/<app-name>`.
 
-### Application Reconciliation
+## Application Reconciliation
 
-Each cluster component becomes its own ArgoCD Application. Components may be committed and deployed together even when one provides CRDs, an APIService, or another prerequisite for the next one. The ApplicationSet enables automated sync, pruning, and self-healing for every generated application. It also retries a failed initial sync up to ten times, starting with a five-second delay and using exponential backoff up to three minutes. This handles normal startup races, such as a dependent component being applied before its CRD or APIService has become ready, without requiring a manual sync or another commit. A persistent configuration error remains visible after the retry limit is reached.
+Each cluster component becomes its own ArgoCD *Application*. Components may be committed and deployed together even when one provides CRDs, an APIService, or another prerequisite for the next one.
+
+The ArgoCD *ApplicationSet* enables automated sync, pruning, and self-healing for every generated application. It also retries a failed initial sync up to ten times, starting with a five-second delay and using exponential backoff up to three minutes. This handles normal startup races, such as a dependent component being applied before its CRD or APIService has become ready, without requiring a manual sync or another commit. A persistent configuration error remains visible after the retry limit is reached.
 
 ## KBase Components
 
-Collection of things that are useful for a cluster.
+### Concept
 
-Inter-dependencies should be minimal but cannot be prevented entirely and have to be managed by convention:
+KBase is a collection of components which can be assigned to k8s clusters.Inter-dependencies between these components should be kept as minimal as possible but cannot be prevented entirely:
 
-- (Cluster-) Role bindings to k8s users should not be made part of the component. Like e.g. a mapping between a component-specific role and an OIDC user. Instead, they're assigned centrally in `kbase/components/rbac`. In case only a subset of components is assigned to a cluster, this can lead to bindings for which no role exists. This is not beautiful bot does not cause harm and is not considered invalid by k8s. The alternate approach (i.e., to make such assignments a part of each component) creates an widespread dependency between the components and central user/role names. I consider that the greater evil.
+- While cert-manager can create certificates for anything in the cluster, it is also used to handle certificates for traefik (reasoning blow). This creates a dependency, i.e., traefik cannot be used without also using cert-manager.
+
+- (Cluster-) Role bindings to k8s users should not be made part of the component. Like e.g. a mapping between a component-specific role and an OIDC group or user. Instead, they're assigned centrally in `kbase/components/rbac`. In case only a subset of components is assigned to a cluster, this can lead to bindings for which no role exists. This is not beautiful bot does not cause harm and is not considered invalid by k8s. The alternate approach (i.e., to make such assignments a part of each component) creates an widespread dependency between the components and central user/role names. I consider that to be the greater evil.
 
 ### cert-manager
 
-cert-manager is installed as a kbase component, but issuing public ACME certificates for `nom.cx` still needs a DNS01 solver decision. cert-manager supports several DNS providers in-tree, but Namecheap is not one of them; using Namecheap requires an external DNS01 webhook. The cleaner long-term option is to move or delegate ACME challenge DNS to a provider with first-class cert-manager support, such as Cloudflare or Route53.
+cert-manager is installed as a kbase component, but issuing public ACME certificates for `nom.cx` still needs a DNS01 solver decision. cert-manager supports several DNS providers in-tree, but Namecheap is not one of them; using Namecheap requires an external DNS01 webhook. The cleaner long-term option might be to move or delegate ACME challenge DNS to a provider with first-class cert-manager support, such as Cloudflare or Route53.
 
-The Namecheap webhook is vendored as its own kbase component, `crtmgr-ncheap-webhook`. It installs an extension APIService with the solver group `acme.namecheap.com`. The webhook is intentionally separate from the cert-manager component so cert-manager can be installed and become healthy before the extension APIService is added.
+The Namecheap webhook is vendored as its own kbase component, `crtmgr-ncheap-webhook`. It installs an extension APIService with the solver group `acme.namecheap.com`. The webhook is split from the cert-manager component so cert-manager can be installed and become healthy before the extension APIService is added.
 
 `crtmgr-ncheap-issuer` adds staging and production ClusterIssuers:
 
@@ -60,7 +64,7 @@ Each public `IngressRoute` uses a cert-manager `Certificate` in the same namespa
 
 ### csinfs
 
-A NFS driver (<https://github.com/kubernetes-csi/csi-driver-nfs>), hooked up to an internal NFS server
+A NFS driver (<https://github.com/kubernetes-csi/csi-driver-nfs>), hooked up to an internal NFS server to experiment with *ReadWriteMany* storage.
 
 Cluster overlays must set a unique `subDir` template for each StorageClass. The NFS CSI driver expands PVC/PV metadata in this field, so l5ug uses a flat pattern with the cluster name, PVC namespace, PVC name, and PV name. Avoid nested `subDir` layouts here: the driver only removes the final directory on PV deletion, which would leave parent directories behind.
 
@@ -76,7 +80,7 @@ Has a problematic list of dependencies, see <https://github.com/kubernetes/dashb
 
 ### rbac
 
-A standard set of permissions that serves as my baseline and should be applied to any cluster. Maps OIDC roles
+A standard set of permissions that serves as my baseline and should be applied to any cluster. Maps OIDC roles.
 
 To allow for finegrained adjustments, API groups have their own files. oidc-crb.yaml assigns them to OIDC roles.
 
@@ -88,7 +92,7 @@ This might be not so nice for e.g. helmcharts, which typically include Secrets. 
 
 If managing multiple clusters with one argocd then all clusters need the same internal secret so that the SealedSecrets will be decryptable on each of them.
 
-Rivals with ksops.
+Rivals with the ksops approach.
 
 #### Creating SealedSecrets
 
@@ -131,8 +135,8 @@ $ kubectl get -n foo secret mysecret -o yaml
 Error from server (NotFound): secrets "mysecret" not found
 ```
 
-### traefik
+### Traefik
 
-The ingress handler. Especially in conjunction with k3s, make sure to disable the k3s default traefik and use this one. The disabling is managed by puppet.
+The ingress handler. Especially in conjunction with k3s, make sure to disable the k3s default Traefik and use this one. It allows for full control and an independent release cycle. The disabling is managed by puppet.
 
-Public TLS certificates are managed by cert-manager. Traefik consumes their Kubernetes Secrets directly and has no persistent ACME state or dependency on ReadWriteMany storage like NFS.
+TLS certificates for Traefik ingresses are managed by cert-manager, not by Traefik itself. Traefik accesses cert-manager’s Kubernetes secrets directly. This means that Traefik does not need to store the ACME status in a file. The advantage of this is that a cluster configuration can be operated without relying on a ReadWriteMany storage system such as NFS, thereby eliminating the associated challenges.
