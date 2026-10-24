@@ -20,9 +20,9 @@ The ArgoCD *ApplicationSet* enables automated sync, pruning, and self-healing fo
 
 ### Concept
 
-KBase is a collection of components which can be assigned to k8s clusters.Inter-dependencies between these components should be kept as minimal as possible but cannot be prevented entirely:
+KBase is a collection of components which can be assigned to k8s clusters. Inter-dependencies between these components should be kept as minimal as possible but cannot be prevented entirely:
 
-- While cert-manager can create certificates for anything in the cluster, it is also used to handle certificates for traefik (reasoning blow). This creates a dependency, i.e., traefik cannot be used without also using cert-manager.
+- While cert-manager can create certificates for anything in the cluster, it is also used to handle certificates for traefik (reasoning below). This creates a dependency, i.e., traefik cannot be used without also using cert-manager.
 
 - (Cluster-) Role bindings to k8s users should not be made part of the component. Like e.g. a mapping between a component-specific role and an OIDC group or user. Instead, they're assigned centrally in `kbase/components/rbac`. In case only a subset of components is assigned to a cluster, this can lead to bindings for which no role exists. This is not beautiful bot does not cause harm and is not considered invalid by k8s. The alternate approach (i.e., to make such assignments a part of each component) creates an widespread dependency between the components and central user/role names. I consider that to be the greater evil.
 
@@ -139,4 +139,4 @@ Error from server (NotFound): secrets "mysecret" not found
 
 The ingress handler. Especially in conjunction with k3s, make sure to disable the k3s default Traefik and use this one. It allows for full control and an independent release cycle. The disabling is managed by puppet.
 
-TLS certificates for Traefik ingresses are managed by cert-manager, not by Traefik itself. Traefik accesses cert-manager’s Kubernetes secrets directly. This means that Traefik does not need to store the ACME status in a file. The advantage of this is that a cluster configuration can be operated without relying on a ReadWriteMany storage system such as NFS, thereby eliminating the associated challenges.
+TLS certificates for Traefik ingresses are managed by cert-manager, not by Traefik itself. Traefik accesses cert-manager’s Kubernetes secrets directly. This means that Traefik does not need to store the ACME status in a file. The advantage of this is that a clustered traefik configuration can be operated without relying on a ReadWriteMany storage system such as NFS, thereby eliminating the associated challenges.
