@@ -11,3 +11,5 @@ kubectl -n nfstest get pvc,pv,pods
 kubectl -n nfstest rollout restart daemonset/nfstest
 kubectl -n nfstest rollout status daemonset/nfstest
 ```
+
+The setup is meant to experiment with shared persistent state combined with pod evictions or other runtime changes.

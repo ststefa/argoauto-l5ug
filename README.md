@@ -2,6 +2,7 @@
 
 <!-- TOC -->
 
+- [Overview](#overview)
 - [Using ksops and vault](#using-ksops-and-vault)
 - [Local Git Hooks](#local-git-hooks)
 - [Managing Other Clusters](#managing-other-clusters)
@@ -13,9 +14,15 @@
 
 <!-- /TOC -->
 
-This repo controls the argocd app on the l5ug cluster. ArgoCD in turn controls itself and all connected k8s clusters. See `bootstrap/argo-cd` which is brought in by the application in `bootstrap/argo-cd.yaml`.
+## Overview
+
+This repo controls the argocd app on the k8s cluster. ArgoCD in turn controls itself and all connected clusters. See `bootstrap/argo-cd` which is brought in by the application in `bootstrap/argo-cd.yaml`.
 
 To enable standardization across clusters, the "KBase" concept is used, see README there.
+
+The setup is mainly built around kustomize but also has some helm where this is the preferred distribution method of some tool. Kustomize and Helm can well work together. I consider it more composable to use Helm values as little as possible and do the configuration with kustomize. Your mileage may vary.
+
+The repo also showcases the two kinds of argo application: *Directory based* and *kustomize based*. Things below `/apps` are organized in the former way while `/kbase` is structured in the latter. I find the "kustomize way" more expressive. Judge for yourself.
 
 ## Using ksops and vault
 
@@ -35,24 +42,27 @@ Vault transit secrets are another possible backend which does not have these dow
 - A vault instance must be maintained
 - Secrets cannot be decrypted if the vault instance is unreachable. This is both good and bad:
     - good: Leaving developers cannot decrypt secrets anymore
-    - bad: Vault becomes a crucial component. If it's not available, nobody can decrypt. No developer, no argocd
+    - bad: Vault becomes a critical component. If it's not available, nobody can decrypt. No developer, no argocd
 
 The ksops tool allows to combine sops and kustomize. It requires a rather hacky setup, especially if combined with vault transit secrets. This can be found in `bootstrap/argo-cd/patches/argocd-dep-ksops.yaml` and `bootstrap/argo-cd/patches/argocd-dep-vault.yaml`. The idea is to
 
 - Patch the ksops binary into the argocd-repo-server
 - Create a vault token using the kubernetes-auth method and refresh it regularly
+- Decrypt sops-encrypted secrets on the fly using that token
 
-Secrets can then be encrypted by a developer using a vault transit secret. Argo will be able to decrypt them upon deployment using a generator which uses the ksops binary using the same transit secret.
+Secrets can then be encrypted by a developer using a vault transit secret. Argo will be able to decrypt them upon deployment using a so called **kustomize generator** which uses the ksops binary using the same transit secret.
 
 ## Local Git Hooks
 
-Install the repository's Prek-managed Git hooks once after cloning:
+The repo is prepared to use [prek](https://github.com/j178/prek) to enable a git precommit hook. Install the repository's Prek-managed Git hooks once after cloning:
 
 ```sh
 just hooks-install
 ```
 
-The pre-commit hook runs `just sops-check` and rejects files matched by `.sops.yaml` rules when they do not contain encrypted values. Obviously, `just` and `prek` must be installed locally before running the target.
+The pre-commit hook runs `just sops-check` and rejects files matched by `.sops.yaml` rules when they do not contain encrypted values.
+
+Obviously, `just` and `prek` must be installed locally for this to work.
 
 ## Managing Other Clusters
 
@@ -215,7 +225,7 @@ argocd app list
 
 If a different local callback port is needed, add the matching redirect URI to the Bao CLI client and pass it explicitly with `--sso-port`.
 
-Common failures:
+Common OIDC failures:
 
 - `Redirect URI mismatch`: add the exact callback URI shown in the failed request to the Bao client, for example `http://localhost:8085/auth/callback`.
 - `client not allowed to perform authorization code credential flow`: set `authorization_code=true` on the Bao client used by ArgoCD.
